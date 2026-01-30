@@ -1,4 +1,11 @@
-﻿#include "Jeu.hpp"
+﻿/**
+* Programme qui détermine si une année lue du clavier est bissextile.
+* \file   main.cpp
+* \author Aliou Diallo et Édouard Allaire
+* \date   22 janvier 2009
+* Créé le 30 janvier 2026
+*/
+#include "Jeu.hpp"
 #include <iostream>
 #include <fstream>
 #include <span>
