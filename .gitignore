@@ -9,6 +9,8 @@ _site/
 .vs/
 # Additional Ruby/bundler ignore for when you run: bundle install
 /vendor
+ProjetTest/
+x64/
 
 # Specific ignore for GitHub Pages
 # GitHub Pages will always use its own deployed version of pages-gem 
