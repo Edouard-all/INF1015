@@ -42,7 +42,32 @@ string lireString(istream& fichier)
 #pragma endregion
 
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
+span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
+	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
+	return spanJeux;
+}
 
+span<Designer*> spanListeDesigners(ListeDesigners& listeDesigners) {
+	span<Designer*> spanDesigners(listeDesigners.elements, listeDesigners.nElements);
+	return spanDesigners;
+
+}
+
+Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
+	span<Jeu*> listeJeuxSpanner;
+	span<Designer*> listeDesignersSpanner;
+	listeJeuxSpanner = spanListeJeux(listeJeux);
+	for (Jeu* i : listeJeuxSpanner) {
+		for (Designer* j : listeDesignersSpanner) {
+			if (j->nom == nomDesigner) {
+				return j;
+					}
+			}
+
+	}
+	return nullptr;
+
+}
 
 Designer* lireDesigner(istream& fichier)
 {
