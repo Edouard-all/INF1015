@@ -67,8 +67,8 @@ Designer* lireDesigner(istream& fichier)
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
-void ajouterJeu(Jeu* jeu, ListeJeux listeJeux) {
-	if (listeJeux.capacite = 0) {
+void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
+	if (listeJeux.capacite == 0) {
 		listeJeux.capacite = 1;
 		listeJeux.elements = new Jeu*[1];
 		listeJeux.elements[0] = jeu;
@@ -153,6 +153,16 @@ ListeJeux creerListeJeux(const string& nomFichier)
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
+	Jeu jeu1{ "mario" };
+	Jeu jeu2{ "pacman" };
+	Jeu* tableau[5];
+	//tableau[0] = &jeu1;
+	//tableau[1] = &jeu2;
+	ListeJeux lj;
+	lj.elements = tableau;
+	lj.nElements = 0;
+	lj.capacite = 0;
+	Jeu jeu3{ "froggy" };
 #pragma region "Bibliothèque du cours"
 	// Permet sous Windows les "ANSI escape code" pour changer de couleur
 	// https://en.wikipedia.org/wiki/ANSI_escape_code ; les consoles Linux/Mac
@@ -172,8 +182,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
-
+	
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-	ajouterJeu(jeu, listeJeux);
+	ajouterJeu(&jeu3, lj);
+	ajouterJeu(&jeu2, lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
