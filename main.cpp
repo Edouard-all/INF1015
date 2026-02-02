@@ -63,6 +63,26 @@ Designer* lireDesigner(istream& fichier)
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
+void ajouterJeu(Jeu* jeu, ListeJeux listeJeux) {
+	if (listeJeux.capacite = 0) {
+		listeJeux.capacite = 1;
+		listeJeux.elements[0] = new Jeu;
+		listeJeux.elements[0] = jeu;
+		listeJeux.nElements = 1;
+		delete listeJeux.elements;
+	}
+	else if (listeJeux.nElements >= listeJeux.capacite) {
+		listeJeux.capacite *= 2;
+		listeJeux.elements[listeJeux.capacite] = new Jeu;
+		listeJeux.elements[listeJeux.nElements + 1] = jeu;
+		listeJeux.nElements += 1;
+		delete listeJeux.elements[listeJeux.capacite];
+	}
+	else {
+		listeJeux.elements[listeJeux.nElements + 1] = jeu;
+	}
+	delete jeu;
+}
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
 
@@ -94,7 +114,7 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	ListeJeux listeJeux = {};
 	for ([[maybe_unused]] int n : iter::range(nElements))
 	{
-		lireJeu(fichier); //TODO: Ajouter le jeu à la ListeJeux.
+		lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
 	}
 
 	return {}; //TODO: Renvoyer la ListeJeux.
