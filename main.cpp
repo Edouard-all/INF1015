@@ -41,6 +41,9 @@ string lireString(istream& fichier)
 }
 #pragma endregion
 
+span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
+	return span<Jeu*>(listeJeux.elements, listeJeux.nElements);
+}
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
 
 
@@ -66,14 +69,19 @@ Designer* lireDesigner(istream& fichier)
 void ajouterJeu(Jeu* jeu, ListeJeux listeJeux) {
 	if (listeJeux.capacite = 0) {
 		listeJeux.capacite = 1;
-		listeJeux.elements[0] = new Jeu;
+		listeJeux.elements = new Jeu*[1];
+		cout << "allocation" << jeu->titre << endl;
 		listeJeux.elements[0] = jeu;
 		listeJeux.nElements = 1;
-		delete listeJeux.elements;
 	}
 	else if (listeJeux.nElements >= listeJeux.capacite) {
 		listeJeux.capacite *= 2;
-		listeJeux.elements[listeJeux.capacite] = new Jeu;
+			auto nouvelleListe = new Jeu;
+		listeJeux.elements[listeJeux.capacite]
+			delete ancienne
+
+			listeJeux.elements = nou
+		cout << "allocation" << jeu->titre << endl;
 		listeJeux.elements[listeJeux.nElements + 1] = jeu;
 		listeJeux.nElements += 1;
 		delete listeJeux.elements[listeJeux.capacite];
@@ -81,11 +89,12 @@ void ajouterJeu(Jeu* jeu, ListeJeux listeJeux) {
 	else {
 		listeJeux.elements[listeJeux.nElements + 1] = jeu;
 	}
-	delete jeu;
 }
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
+void enleveJeu(Jeu* jeu, ListeJeux listeJeux) {
 
+}
 Jeu* lireJeu(istream& fichier)
 {
 	Jeu jeu = {};
@@ -159,6 +168,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-
+	ajouterJeu(jeu, listeJeux);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
