@@ -10,6 +10,7 @@
 #include <fstream>
 #include <span>
 #include "cppitertools/range.hpp"
+#include "cppitertools/enumerate.hpp"
 #include "bibliotheque_cours.hpp"
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"  // Ajout des numéros de ligne des "new" dans le rapport de fuites.  Doit être après les include du système, qui peuvent utiliser des "placement new" (non supporté par notre ajout de numéros de lignes).
@@ -70,24 +71,29 @@ void ajouterJeu(Jeu* jeu, ListeJeux listeJeux) {
 	if (listeJeux.capacite = 0) {
 		listeJeux.capacite = 1;
 		listeJeux.elements = new Jeu*[1];
-		cout << "allocation" << jeu->titre << endl;
 		listeJeux.elements[0] = jeu;
+		cout << "allocation" << jeu->titre << endl;
 		listeJeux.nElements = 1;
 	}
 	else if (listeJeux.nElements >= listeJeux.capacite) {
 		listeJeux.capacite *= 2;
-			auto nouvelleListe = new Jeu;
-		listeJeux.elements[listeJeux.capacite]
-			delete ancienne
-
-			listeJeux.elements = nou
-		cout << "allocation" << jeu->titre << endl;
-		listeJeux.elements[listeJeux.nElements + 1] = jeu;
+		span<Jeu*> anciene = spanListeJeux(listeJeux);
+		Jeu** nouvelleListe = listeJeux.elements;
+		for (auto [i, jeu] : enumerate(anciene)) {
+			nouvelleListe[i] = jeu;
+		}
+		delete listeJeux.elements;
+		listeJeux.elements = new Jeu * [listeJeux.capacite];
+		span<Jeu*> nouvelle = span<Jeu*>(nouvelleListe, listeJeux.nElements);
+		for (auto [i,jeu] : enumerate(nouvelle)) {
+			listeJeux.elements[i] = jeu;
+		}
 		listeJeux.nElements += 1;
-		delete listeJeux.elements[listeJeux.capacite];
+		listeJeux.elements[listeJeux.nElements] = jeu;
 	}
 	else {
 		listeJeux.elements[listeJeux.nElements + 1] = jeu;
+		listeJeux.nElements += 1;
 	}
 }
 
