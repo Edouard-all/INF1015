@@ -72,28 +72,30 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.capacite = 1;
 		listeJeux.elements = new Jeu*[1];
 		listeJeux.elements[0] = jeu;
-		cout << "allocation" << jeu->titre << endl;
+		cout << "allocation " << jeu->titre << endl;
 		listeJeux.nElements = 1;
 	}
-	else if (listeJeux.nElements >= listeJeux.capacite) {
+	else if (listeJeux.nElements == listeJeux.capacite) {
+		span<Jeu*> anciene;
+		anciene = spanListeJeux(listeJeux);
+		Jeu** nouvelleListe;
 		listeJeux.capacite *= 2;
-		span<Jeu*> anciene = spanListeJeux(listeJeux);
-		Jeu** nouvelleListe = listeJeux.elements;
+		nouvelleListe = new Jeu* [listeJeux.capacite] ;
 		for (auto [i, jeu] : enumerate(anciene)) {
 			nouvelleListe[i] = jeu;
 		}
-		delete listeJeux.elements;
-		listeJeux.elements = new Jeu * [listeJeux.capacite];
-		span<Jeu*> nouvelle = span<Jeu*>(nouvelleListe, listeJeux.nElements);
-		for (auto [i,jeu] : enumerate(nouvelle)) {
-			listeJeux.elements[i] = jeu;
-		}
-		listeJeux.nElements += 1;
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+		listeJeux.elements = nouvelleListe;
 		listeJeux.elements[listeJeux.nElements] = jeu;
+		listeJeux.nElements += 1;
+		cout << "allocation " << jeu->titre << endl;
+
 	}
 	else {
-		listeJeux.elements[listeJeux.nElements + 1] = jeu;
 		listeJeux.nElements += 1;
+		listeJeux.elements[listeJeux.nElements] = jeu;
+		cout << "allocation" << jeu->titre << endl;
 	}
 }
 
@@ -186,5 +188,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 	ajouterJeu(&jeu3, lj);
 	ajouterJeu(&jeu2, lj);
+	ajouterJeu(&jeu1, lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
