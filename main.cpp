@@ -10,6 +10,7 @@
 #include <fstream>
 #include <span>
 #include "cppitertools/range.hpp"
+#include "cppitertools/enumerate.hpp"
 #include "bibliotheque_cours.hpp"
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"  // Ajout des numéros de ligne des "new" dans le rapport de fuites.  Doit être après les include du système, qui peuvent utiliser des "placement new" (non supporté par notre ajout de numéros de lignes).
@@ -41,6 +42,9 @@ string lireString(istream& fichier)
 }
 #pragma endregion
 
+span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
+	return span<Jeu*>(listeJeux.elements, listeJeux.nElements);
+}
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
 span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
 	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
@@ -88,9 +92,74 @@ Designer* lireDesigner(istream& fichier)
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
 
 //TODO: Fonction pour ajouter un Jeu à ListeJeux.
+void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
+	if (listeJeux.capacite == 0) {
+		listeJeux.capacite = 1;
+		listeJeux.elements = new Jeu*[1];
+		listeJeux.elements[0] = jeu;
+		cout << "allocation " << jeu->titre << endl;
+		listeJeux.nElements = 1;
+	}
+	else if (listeJeux.nElements == listeJeux.capacite) {
+		span<Jeu*> ancienne;
+		ancienne = spanListeJeux(listeJeux);
+		Jeu** nouvelleListe;
+		listeJeux.capacite *= 2;
+		nouvelleListe = new Jeu* [listeJeux.capacite] ;
+		for (auto [i, jeu] : enumerate(ancienne)) {
+			nouvelleListe[i] = jeu;
+		}
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+		listeJeux.elements = nouvelleListe;
+		listeJeux.elements[listeJeux.nElements] = jeu;
+		listeJeux.nElements += 1;
+		cout << "allocation " << jeu->titre << endl;
+
+	}
+	else {
+		listeJeux.nElements += 1;
+		listeJeux.elements[listeJeux.nElements] = jeu;
+		cout << "allocation" << jeu->titre << endl;
+	}
+}
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
-
+void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
+	span<Jeu*>ancienne;
+	ancienne = spanListeJeux(listeJeux);
+	Jeu** nouvelleListe;
+	nouvelleListe = new Jeu* [listeJeux.capacite];
+	uint8_t counter = 0;
+	for (auto [i, unJeu] : enumerate(ancienne)) {
+		if (jeu != unJeu) {
+			nouvelleListe[counter] = unJeu;
+			counter++;
+		}
+	}
+	listeJeux.nElements -= 1;
+	delete[] listeJeux.elements;
+	listeJeux.elements = nullptr;
+	listeJeux.elements = nouvelleListe;
+	if ((listeJeux.nElements == listeJeux.capacite / 2 )&&(listeJeux.nElements !=0)) {
+		Jeu** listeTemporaire;
+		listeJeux.capacite /= 2;
+		listeTemporaire = new Jeu* [listeJeux.capacite];
+		span<Jeu*>laListe;
+		laListe = spanListeJeux(listeJeux);
+		for (auto [j, leJeu] : enumerate(laListe)) {
+			listeTemporaire[j] = leJeu;
+		}
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+		listeJeux.elements = listeTemporaire;
+	}
+	else if (listeJeux.nElements == 0) {
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+	}
+	cout << "jeu " << jeu->titre << " est enleve" << endl;
+}
 Jeu* lireJeu(istream& fichier)
 {
 	Jeu jeu = {};
@@ -119,7 +188,7 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	ListeJeux listeJeux = {};
 	for ([[maybe_unused]] int n : iter::range(nElements))
 	{
-		lireJeu(fichier); //TODO: Ajouter le jeu à la ListeJeux.
+		lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
 	}
 
 	return {}; //TODO: Renvoyer la ListeJeux.
@@ -143,6 +212,16 @@ ListeJeux creerListeJeux(const string& nomFichier)
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
+	Jeu jeu1{ "mario" };
+	Jeu jeu2{ "pacman" };
+	Jeu* tableau[5];
+	//tableau[0] = &jeu1;
+	//tableau[1] = &jeu2;
+	ListeJeux lj;
+	lj.elements = tableau;
+	lj.nElements = 0;
+	lj.capacite = 0;
+	Jeu jeu3{ "froggy" };
 #pragma region "Bibliothèque du cours"
 	// Permet sous Windows les "ANSI escape code" pour changer de couleur
 	// https://en.wikipedia.org/wiki/ANSI_escape_code ; les consoles Linux/Mac
@@ -162,8 +241,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
-
+	
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-
+	ajouterJeu(&jeu3, lj);
+	ajouterJeu(&jeu2, lj);
+	ajouterJeu(&jeu1, lj);
+	enleverJeu(&jeu2, lj);
+	enleverJeu(&jeu3, lj);
+	enleverJeu(&jeu1, lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
