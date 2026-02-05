@@ -76,12 +76,12 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.nElements = 1;
 	}
 	else if (listeJeux.nElements == listeJeux.capacite) {
-		span<Jeu*> anciene;
-		anciene = spanListeJeux(listeJeux);
+		span<Jeu*> ancienne;
+		ancienne = spanListeJeux(listeJeux);
 		Jeu** nouvelleListe;
 		listeJeux.capacite *= 2;
 		nouvelleListe = new Jeu* [listeJeux.capacite] ;
-		for (auto [i, jeu] : enumerate(anciene)) {
+		for (auto [i, jeu] : enumerate(ancienne)) {
 			nouvelleListe[i] = jeu;
 		}
 		delete[] listeJeux.elements;
@@ -100,8 +100,40 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 }
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
-void enleveJeu(Jeu* jeu, ListeJeux listeJeux) {
-
+void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
+	span<Jeu*>ancienne;
+	ancienne = spanListeJeux(listeJeux);
+	Jeu** nouvelleListe;
+	nouvelleListe = new Jeu* [listeJeux.capacite];
+	uint8_t counter = 0;
+	for (auto [i, unJeu] : enumerate(ancienne)) {
+		if (jeu != unJeu) {
+			nouvelleListe[counter] = unJeu;
+			counter++;
+		}
+	}
+	listeJeux.nElements -= 1;
+	delete[] listeJeux.elements;
+	listeJeux.elements = nullptr;
+	listeJeux.elements = nouvelleListe;
+	if ((listeJeux.nElements == listeJeux.capacite / 2 )&&(listeJeux.nElements !=0)) {
+		Jeu** listeTemporaire;
+		listeJeux.capacite /= 2;
+		listeTemporaire = new Jeu* [listeJeux.capacite];
+		span<Jeu*>laListe;
+		laListe = spanListeJeux(listeJeux);
+		for (auto [j, leJeu] : enumerate(laListe)) {
+			listeTemporaire[j] = leJeu;
+		}
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+		listeJeux.elements = listeTemporaire;
+	}
+	else if (listeJeux.nElements == 0) {
+		delete[] listeJeux.elements;
+		listeJeux.elements = nullptr;
+	}
+	cout << "jeu " << jeu->titre << " est enleve" << endl;
 }
 Jeu* lireJeu(istream& fichier)
 {
@@ -189,5 +221,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	ajouterJeu(&jeu3, lj);
 	ajouterJeu(&jeu2, lj);
 	ajouterJeu(&jeu1, lj);
+	enleverJeu(&jeu2, lj);
+	enleverJeu(&jeu3, lj);
+	enleverJeu(&jeu1, lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
