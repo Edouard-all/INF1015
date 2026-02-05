@@ -46,10 +46,10 @@ span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
 	return span<Jeu*>(listeJeux.elements, listeJeux.nElements);
 }
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
-span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
-	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
-	return spanJeux;
-}
+//span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
+//	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
+//	return spanJeux;
+//}
 
 span<Designer*> spanListeDesigners(ListeDesigners& listeDesigners) {
 	span<Designer*> spanDesigners(listeDesigners.elements, listeDesigners.nElements);
@@ -57,10 +57,11 @@ span<Designer*> spanListeDesigners(ListeDesigners& listeDesigners) {
 
 }
 
-Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
+Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux, ListeDesigners& listeDesigners) {
 	span<Jeu*> listeJeuxSpanner;
 	span<Designer*> listeDesignersSpanner;
 	listeJeuxSpanner = spanListeJeux(listeJeux);
+	listeDesignersSpanner = spanListeDesigners(listeDesigners);
 	for (Jeu* i : listeJeuxSpanner) {
 		for (Designer* j : listeDesignersSpanner) {
 			if (j->nom == nomDesigner) {
@@ -246,8 +247,34 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	ajouterJeu(&jeu3, lj);
 	ajouterJeu(&jeu2, lj);
 	ajouterJeu(&jeu1, lj);
-	enleverJeu(&jeu2, lj);
-	enleverJeu(&jeu3, lj);
-	enleverJeu(&jeu1, lj);
+	//enleverJeu(&jeu2, lj);
+	//enleverJeu(&jeu3, lj);
+	//enleverJeu(&jeu1, lj);
+	
+	Designer designer1;
+	designer1.nom = "Jason";
+	designer1.anneeNaissance = 2006;
+	designer1.listeJeuxParticipes = lj;
+	Designer designer2;
+	designer2.nom = "Aliou";
+	designer2.anneeNaissance = 2009;
+	designer2.listeJeuxParticipes = lj;
+	Designer designer3;
+	designer3.nom = "Edouard";
+	designer3.anneeNaissance = 2005;
+	designer3.listeJeuxParticipes = lj;
+
+	ListeDesigners desiListe;
+	desiListe.nElements = 3;
+	desiListe.capacite = 4;
+	
+	Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
+
+	desiListe.elements = tableaud;
+
+
+
+
+	chercheDesigner("Aliou", lj, desiListe);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
