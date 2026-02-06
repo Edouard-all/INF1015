@@ -14,6 +14,7 @@
 #include "bibliotheque_cours.hpp"
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"  // Ajout des numéros de ligne des "new" dans le rapport de fuites.  Doit être après les include du système, qui peuvent utiliser des "placement new" (non supporté par notre ajout de numéros de lignes).
+#include <string>
 
 using namespace std;
 using namespace iter;
@@ -46,23 +47,19 @@ span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
 	return span<Jeu*>(listeJeux.elements, listeJeux.nElements);
 }
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
-//span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
-//	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
-//	return spanJeux;
-//}
-
 span<Designer*> spanListeDesigners(ListeDesigners& listeDesigners) {
 	span<Designer*> spanDesigners(listeDesigners.elements, listeDesigners.nElements);
 	return spanDesigners;
 
 }
 
-Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux, ListeDesigners& listeDesigners) {
+Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
 	span<Jeu*> listeJeuxSpanner;
 	span<Designer*> listeDesignersSpanner;
 	listeJeuxSpanner = spanListeJeux(listeJeux);
-	listeDesignersSpanner = spanListeDesigners(listeDesigners);
+	
 	for (Jeu* i : listeJeuxSpanner) {
+		listeDesignersSpanner = spanListeDesigners(i->designers);
 		for (Designer* j : listeDesignersSpanner) {
 			if (j->nom == nomDesigner) {
 				return j;
@@ -85,10 +82,12 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-
-
+	
+	Designer* designerPtr = new Designer{ designer };
+	//cout << ­"Designer est alloue" << endl;
+	cout << "Designer est alloue" << endl;
 	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {}; //TODO: Retourner le pointeur vers le designer crée.
+	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
 }
 
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
@@ -174,9 +173,11 @@ Jeu* lireJeu(istream& fichier)
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
 
-
+	
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
-		lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		Designer* designerPtr = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		
+
 		//TODO: Ajouter le jeu à la liste des jeux auquel a participé le designer.
 	}
 	return {}; //TODO: Retourner le pointeur vers le nouveau jeu.
@@ -270,12 +271,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	desiListe.capacite = 4;
 	
 	Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
-
 	desiListe.elements = tableaud;
+	jeu1.designers = desiListe;
 
 
 
 
-	chercheDesigner("Aliou", lj, desiListe);
+
+	chercheDesigner("Aliou", lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
