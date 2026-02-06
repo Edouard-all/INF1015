@@ -73,6 +73,7 @@ Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux, ListeDesigne
 	return nullptr;
 
 }
+//123
 
 Designer* lireDesigner(istream& fichier)
 {
