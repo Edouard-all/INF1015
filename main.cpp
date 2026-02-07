@@ -82,9 +82,8 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-	
 	Designer* designerPtr = new Designer{ designer };
-	//cout << ­"Designer est alloue" << endl;
+	
 	cout << "Designer est alloue" << endl;
 	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
@@ -164,6 +163,7 @@ void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
 Jeu* lireJeu(istream& fichier)
 {
 	Jeu jeu = {};
+	Jeu* jeuPtr = new  Jeu{ jeu };
 	jeu.titre = lireString(fichier);
 	jeu.anneeSortie = lireUint16(fichier);
 	jeu.developpeur = lireString(fichier);
@@ -175,12 +175,15 @@ Jeu* lireJeu(istream& fichier)
 
 	
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
-		Designer* designerPtr = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
-		
 
+		Designer* designerPtr = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		jeu.designers.elements[i] = designerPtr;
+		
+		
 		//TODO: Ajouter le jeu à la liste des jeux auquel a participé le designer.
+		ajouterJeu(jeuPtr, designerPtr->listeJeuxParticipes);
 	}
-	return {}; //TODO: Retourner le pointeur vers le nouveau jeu.
+	return jeuPtr; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
 ListeJeux creerListeJeux(const string& nomFichier)
