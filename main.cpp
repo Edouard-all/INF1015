@@ -82,7 +82,7 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-	Designer* designerPtr = new Designer{ designer };
+	Designer* designerPtr = new Designer(designer);
 	
 	cout << "Designer est alloue" << endl;
 	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
@@ -168,6 +168,11 @@ Jeu* lireJeu(istream& fichier)
 	jeu.anneeSortie = lireUint16(fichier);
 	jeu.developpeur = lireString(fichier);
 	jeu.designers.nElements = lireUint8(fichier);
+	jeu.designers.capacite = jeu.designers.nElements;
+	Designer** tableauDesignerPtr = new Designer* [ jeu.designers.capacite];
+	jeu.designers.elements = tableauDesignerPtr;
+	
+
 
 	//TODO: Ajouter en mémoire le jeu lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
@@ -192,12 +197,15 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	fichier.exceptions(ios::failbit);
 	int nElements = lireUint16(fichier);
 	ListeJeux listeJeux = {};
+	listeJeux.nElements = nElements;
+	listeJeux.capacite = nElements;
 	for ([[maybe_unused]] int n : iter::range(nElements))
 	{
-		lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
+		Jeu* jeuPtr = lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
+		listeJeux.elements[n] = jeuPtr;
 	}
 
-	return {}; //TODO: Renvoyer la ListeJeux.
+	return listeJeux; //TODO: Renvoyer la ListeJeux.
 }
 
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
@@ -249,9 +257,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
 	
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-	ajouterJeu(&jeu3, lj);
-	ajouterJeu(&jeu2, lj);
-	ajouterJeu(&jeu1, lj);
+	//ajouterJeu(&jeu3, lj);
+	//ajouterJeu(&jeu2, lj);
+	//ajouterJeu(&jeu1, lj);
 	//enleverJeu(&jeu2, lj);
 	//enleverJeu(&jeu3, lj);
 	//enleverJeu(&jeu1, lj);
@@ -281,6 +289,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 
 
-	chercheDesigner("Aliou", lj);
+	//chercheDesigner("Aliou", lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
