@@ -14,6 +14,7 @@
 #include "bibliotheque_cours.hpp"
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"  // Ajout des numéros de ligne des "new" dans le rapport de fuites.  Doit être après les include du système, qui peuvent utiliser des "placement new" (non supporté par notre ajout de numéros de lignes).
+#include <string>
 
 using namespace std;
 using namespace iter;
@@ -46,23 +47,19 @@ span<Jeu*>spanListeJeux(ListeJeux listeJeux) {
 	return span<Jeu*>(listeJeux.elements, listeJeux.nElements);
 }
 //TODO: Fonction qui cherche un designer par son nom dans une ListeJeux.  Devrait utiliser span.
-//span<Jeu*>spanListeJeux(ListeJeux& listeJeux) {
-//	span<Jeu*> spanJeux(listeJeux.elements, listeJeux.nElements);
-//	return spanJeux;
-//}
-
 span<Designer*> spanListeDesigners(ListeDesigners& listeDesigners) {
 	span<Designer*> spanDesigners(listeDesigners.elements, listeDesigners.nElements);
 	return spanDesigners;
 
 }
 
-Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux, ListeDesigners& listeDesigners) {
+Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
 	span<Jeu*> listeJeuxSpanner;
 	span<Designer*> listeDesignersSpanner;
 	listeJeuxSpanner = spanListeJeux(listeJeux);
-	listeDesignersSpanner = spanListeDesigners(listeDesigners);
+	
 	for (Jeu* i : listeJeuxSpanner) {
+		listeDesignersSpanner = spanListeDesigners(i->designers);
 		for (Designer* j : listeDesignersSpanner) {
 			if (j->nom == nomDesigner) {
 				return j;
@@ -74,6 +71,7 @@ Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux, ListeDesigne
 
 }
 
+
 Designer* lireDesigner(istream& fichier)
 {
 	Designer designer = {};
@@ -84,10 +82,11 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-
-
+	Designer* designerPtr = new Designer(designer);
+	
+	cout << "Designer est alloue" << endl;
 	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {}; //TODO: Retourner le pointeur vers le designer crée.
+	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
 }
 
 //TODO: Fonction qui change la taille du tableau de jeux de ListeJeux.
@@ -184,17 +183,28 @@ Jeu* lireJeu(istream& fichier)
 	jeu.anneeSortie = lireUint16(fichier);
 	jeu.developpeur = lireString(fichier);
 	jeu.designers.nElements = lireUint8(fichier);
+	jeu.designers.capacite = jeu.designers.nElements;
+	Designer** tableauDesignerPtr = new Designer* [jeu.designers.capacite];
+	jeu.designers.elements = tableauDesignerPtr;
+	Jeu* jeuPtr = new  Jeu{ jeu };
+	
+
 
 	//TODO: Ajouter en mémoire le jeu lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du jeu est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
 
-
+	
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
-		lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+
+		Designer* designerPtr = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		jeu.designers.elements[i] = designerPtr;
+		
+		
 		//TODO: Ajouter le jeu à la liste des jeux auquel a participé le designer.
+		ajouterJeu(jeuPtr, designerPtr->listeJeuxParticipes);
 	}
-	return {}; //TODO: Retourner le pointeur vers le nouveau jeu.
+	return jeuPtr; //TODO: Retourner le pointeur vers le nouveau jeu.
 }
 
 ListeJeux creerListeJeux(const string& nomFichier)
@@ -203,12 +213,28 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	fichier.exceptions(ios::failbit);
 	int nElements = lireUint16(fichier);
 	ListeJeux listeJeux = {};
+	listeJeux.nElements = nElements;
+	listeJeux.capacite = nElements;
+	Jeu** tableauJeuPtr = new Jeu * [listeJeux.capacite];
+	listeJeux.elements = tableauJeuPtr;
 	for ([[maybe_unused]] int n : iter::range(nElements))
 	{
-		lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
+		Jeu* jeuPtr = lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
+		listeJeux.elements[n] = jeuPtr;
+	}
+	for (int i : iter::range(nElements)) {
+		for (int j : iter::range((*(listeJeux.elements[i])).designers.nElements)) {
+			Designer* designerExistant = chercheDesigner((*(listeJeux.elements[i])).designers.elements[j]->nom, listeJeux);
+			Designer*& designerCourant = (*(listeJeux.elements[i])).designers.elements[j];
+			if (designerExistant != designerCourant) {
+				delete designerCourant;
+				designerCourant = designerExistant;
+
+			}
+		}
 	}
 
-	return {}; //TODO: Renvoyer la ListeJeux.
+	return listeJeux; //TODO: Renvoyer la ListeJeux.
 }
 
 //TODO: Fonction pour détruire un jeu (libération de mémoire allouée).
@@ -280,7 +306,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
-	creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
+	ListeJeux listeJeu = creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
 
 	static const string ligneSeparation = "\n\033[35m════════════════════════════════════════\033[0m\n";
 	cout << ligneSeparation << endl;
@@ -310,6 +336,25 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	designer3->nom = "Edouard";
 	designer3->anneeNaissance = 2005;
 	designer3->listeJeuxParticipes = lj;
+	//ajouterJeu(&jeu3, lj);
+	//ajouterJeu(&jeu2, lj);
+	//ajouterJeu(&jeu1, lj);
+	//enleverJeu(&jeu2, lj);
+	//enleverJeu(&jeu3, lj);
+	//enleverJeu(&jeu1, lj);
+	
+	Designer designer1;
+	designer1.nom = "Jason";
+	designer1.anneeNaissance = 2006;
+	designer1.listeJeuxParticipes = lj;
+	Designer designer2;
+	designer2.nom = "Aliou";
+	designer2.anneeNaissance = 2009;
+	designer2.listeJeuxParticipes = lj;
+	Designer designer3;
+	designer3.nom = "Edouard";
+	designer3.anneeNaissance = 2005;
+	designer3.listeJeuxParticipes = lj;
 
 	ListeDesigners desiListe;
 	desiListe.nElements = 3;
@@ -327,5 +372,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	chercheDesigner("Aliou", lj, desiListe);
 	detruireListeJeux(lj);
+	Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
+	desiListe.elements = tableaud;
+	jeu1.designers = desiListe;
+
+
+
+
+
+	//chercheDesigner("Aliou", lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
