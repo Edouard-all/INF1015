@@ -70,7 +70,7 @@ Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
 	return nullptr;
 
 }
-//123
+
 
 Designer* lireDesigner(istream& fichier)
 {
@@ -206,15 +206,17 @@ ListeJeux creerListeJeux(const string& nomFichier)
 		Jeu* jeuPtr = lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
 		listeJeux.elements[n] = jeuPtr;
 	}
-	/*for (int i : iter::range(nElements)) {
+	for (int i : iter::range(nElements)) {
 		for (int j : iter::range((*(listeJeux.elements[i])).designers.nElements)) {
-			if (chercheDesigner((*(listeJeux.elements[i])).designers.elements[j]->nom, listeJeux) != (*(listeJeux.elements[i])).designers.elements[j]) {
-				delete (*(listeJeux.elements[i])).designers.elements[j];
-				(*(listeJeux.elements[i])).designers.elements[j] = chercheDesigner((*(listeJeux.elements[i])).designers.elements[j]->nom, listeJeux);
+			Designer* designerExistant = chercheDesigner((*(listeJeux.elements[i])).designers.elements[j]->nom, listeJeux);
+			Designer*& designerCourant = (*(listeJeux.elements[i])).designers.elements[j];
+			if (designerExistant != designerCourant) {
+				delete designerCourant;
+				designerCourant = designerExistant;
 
 			}
 		}
-	}*/
+	}
 
 	return listeJeux; //TODO: Renvoyer la ListeJeux.
 }
