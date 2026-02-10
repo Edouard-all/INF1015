@@ -276,12 +276,35 @@ void detruireListeJeux(ListeJeux & lj) {
 	cout << "la liste est detruite";
 }
 //TODO: Fonction pour afficher les infos d'un designer.
+void afficherInfoDesigner(Designer& designer) {
+	cout << designer.nom << endl;
+	cout << designer.anneeNaissance << endl;
+	cout << designer.pays << endl;
+	// est-ce qu'il faut mettre la liste des jeux dans le quelle il a participé
+}
 
 //TODO: Fonction pour afficher les infos d'un jeu ainsi que ses designers.
+void afficherInfoJeu(Jeu& jeu) {
+	cout << jeu.titre << endl;
+	cout << jeu.anneeSortie << endl;
+	cout << jeu.developpeur << endl;
+	for (int i : iter::range(jeu.designers.nElements)) {
+		string  designer = jeu.designers.elements[i]->nom;
+		cout << designer  << endl;
+	}
+}
 
 
 //TODO: Fonction pour afficher tous les jeux de ListeJeux, séparés par un ligne.
 // Votre ligne de séparation doit être différent de celle utilisée dans le main.
+
+void afficherListeJeux(ListeJeux& listeJeux) {
+	static const string ligneSeparation = "\n\033[35m**************************************\033[0m\n";
+	for (int i : iter::range(listeJeux.nElements)) {
+		afficherInfoJeu(*listeJeux.elements[i]);
+		cout << ligneSeparation << endl;
+	}
+}
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
@@ -312,15 +335,16 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	cout << ligneSeparation << endl;
 	cout << "Premier jeu de la liste :" << endl;
 	//TODO: Afficher le premier jeu de la liste (en utilisant la fonction).  Devrait être Chrono Trigger.
-
+	afficherInfoJeu(*(listeJeu.elements[0]));
 	cout << ligneSeparation << endl;
 
 	//TODO: Appel à votre fonction d'affichage de votre liste de jeux.
-	
+	afficherListeJeux(listeJeu);
+
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-	ajouterJeu(jeuTrois, lj);
+	/*ajouterJeu(jeuTrois, lj);
 	ajouterJeu(jeuDeux, lj);
-	ajouterJeu(jeuUn, lj);
+	ajouterJeu(jeuUn, lj);*/
 	/*enleverJeu(jeu3, lj);
 	enleverJeu(jeu2, lj);
 	enleverJeu(jeu1, lj);*/
@@ -343,7 +367,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	//enleverJeu(&jeu3, lj);
 	//enleverJeu(&jeu1, lj);
 	
-	Designer designer1;
+	/*Designer designer1;
 	designer1.nom = "Jason";
 	designer1.anneeNaissance = 2006;
 	designer1.listeJeuxParticipes = lj;
@@ -354,7 +378,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	Designer designer3;
 	designer3.nom = "Edouard";
 	designer3.anneeNaissance = 2005;
-	designer3.listeJeuxParticipes = lj;
+	designer3.listeJeuxParticipes = lj;*/
 
 	ListeDesigners desiListe;
 	desiListe.nElements = 3;
@@ -370,11 +394,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 
 
-	chercheDesigner("Aliou", lj, desiListe);
-	detruireListeJeux(lj);
-	Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
-	desiListe.elements = tableaud;
-	jeu1.designers = desiListe;
+	//chercheDesigner("Aliou", lj, desiListe);
+	detruireListeJeux(listeJeu);
+
+	//Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
+	//desiListe.elements = tableaud;
+	//jeu1.designers = desiListe;
 
 
 
