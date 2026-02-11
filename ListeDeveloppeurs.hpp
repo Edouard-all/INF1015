@@ -15,7 +15,7 @@ class ListeDeveloppeurs
 		~ListeDeveloppeurs();
 		void afficher() ;
 		void ajouterDeveloppeur(Developpeur* developpeur);
-		void retirerDeveloppeur();  
+		void retirerDeveloppeur(Developpeur* developpeur); 
 		static span<Developpeur*>spanListeDeveloppeurs(ListeDeveloppeurs listeDeveloppeur);
 
 	private:

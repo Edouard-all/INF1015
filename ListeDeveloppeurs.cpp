@@ -52,11 +52,12 @@ void ListeDeveloppeurs::ajouterDeveloppeur(Developpeur* developpeur) {
 		this->elements = nouvelleListe;
 		this->elements[this->nElements] = developpeur;
 		this->nElements += 1;
+	}
 }
 
-void ListeDeveloppeurs::retirerDeveloppeur(){
-
-}
+	void ListeDeveloppeurs::retirerDeveloppeur(Developpeur* developpeur) {
+		cout << "" << endl;
+	}
 
 ListeDeveloppeurs::~ListeDeveloppeurs() {
 	delete[] this;
