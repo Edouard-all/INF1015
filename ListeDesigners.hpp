@@ -7,3 +7,5 @@ struct ListeDesigners
 	unsigned capacite;
 	Designer** elements;
 };
+
+
