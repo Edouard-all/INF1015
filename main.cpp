@@ -112,7 +112,7 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 			nouvelleListe[i] = jeu;
 		}
 		delete[] listeJeux.elements;
-		//listeJeux.elements = nullptr;
+		listeJeux.elements = nullptr;
 		listeJeux.elements = nouvelleListe;
 		listeJeux.elements[listeJeux.nElements] = jeu;
 		listeJeux.nElements += 1;
@@ -215,36 +215,42 @@ void detruireJeu(Jeu* jeu) {
 	for (Designer* designer : ld) {
 		Jeu** listeTemporaire = designer->listeJeuxParticipes.elements;
 		span<Jeu*> ljd(listeTemporaire, designer->listeJeuxParticipes.nElements);
-		for (Jeu* unJeu : ljd) {
-			if (jeu == unJeu)
-				enleverJeu(unJeu, designer->listeJeuxParticipes);
+		for (uint8_t i : iter::range<uint8_t>(ljd.size(),1, -1)) {
+			if (jeu == designer->listeJeuxParticipes.elements[i-1])
+				enleverJeu(jeu, designer->listeJeuxParticipes);
 		}
 		
 	}
-	string nom = jeu->titre;
-	delete jeu;
-	cout << "jeu " << nom << " desaloue" << endl;
 	for (Designer* designer : ld) {
 		if (designer->listeJeuxParticipes.nElements == 0) {
 			delete[] designer->listeJeuxParticipes.elements;
 			designer->listeJeuxParticipes.elements = nullptr;
+			cout << "listejeuxparticipe desaloue" << endl;
 			delete designer;
+			cout << "designer desaloue" << endl;
 			designer = nullptr;
 			break;
 		}
 	}
+	for (uint8_t i : iter::range(ld.size())) {
+		jeu->designers.elements[i] = 0;
+	}
+	delete[] jeu->designers.elements;
+	string nom = jeu->titre;
+	delete jeu;
+	cout << "jeu " << nom << " desaloue" << endl;
 }
 
 
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
 void detruireListeJeux(ListeJeux & lj) {
-	uint8_t compteur = 0;
+	//uint8_t compteur = 0;
 	while(lj.nElements) {
-		detruireJeu(lj.elements[compteur]);
-		compteur += 1;
+		detruireJeu(lj.elements[lj.nElements - 1]);
+		//compteur += 1;
 		lj.nElements -= 1;
 	}
-	//delete[] lj.elements;
+	delete[] lj.elements;
 	cout << "la liste est detruite";
 }
 //TODO: Fonction pour afficher les infos d'un designer.
