@@ -72,7 +72,7 @@ Designer* chercheDesigner(string nomDesigner, ListeJeux& listeJeux) {
 }
 
 
-Designer* lireDesigner(istream& fichier)
+Designer* lireDesigner(istream& fichier, ListeJeux lj)
 {
 	Designer designer = {};
 	designer.nom = lireString(fichier);
@@ -82,10 +82,12 @@ Designer* lireDesigner(istream& fichier)
 	//TODO: Ajouter en mémoire le designer lu. Il faut revoyer le pointeur créé.
 	// TIP: Afficher un message lorsque l'allocation du designer est réussie pour aider au débogage.
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
-	Designer* designerPtr = new Designer(designer);
-	
-	//cout << "Designer est alloue" << endl;
-	//cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
+	Designer* designerPtr = chercheDesigner(designer.nom, lj);
+	if (designerPtr == nullptr) {
+		designerPtr = new Designer(designer);
+		cout << "Designer est alloue" << endl;
+		cout << designer.nom << endl;
+	}//TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
 }
 
@@ -118,48 +120,13 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 
 	}
 	else {
-		listeJeux.nElements += 1;
 		listeJeux.elements[listeJeux.nElements] = jeu;
-		//cout << "allocation" << jeu->titre << endl;
+		listeJeux.nElements += 1;
+		cout << "ajout de " << jeu->titre << endl;
 	}
 }
 
 //TODO: Fonction qui enlève un jeu de ListeJeux.
-//void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
-//	span<Jeu*>ancienne;
-//	ancienne = spanListeJeux(listeJeux);
-//	Jeu** nouvelleListe;
-//	nouvelleListe = new Jeu* [listeJeux.capacite];
-//	uint8_t counter = 0;
-//	for (auto [i, unJeu] : enumerate(ancienne)) {
-//		if (jeu != unJeu) {
-//			nouvelleListe[counter] = unJeu;
-//			counter++;
-//		}
-//	}
-//	listeJeux.nElements -= 1;
-//	delete[] listeJeux.elements;
-//	listeJeux.elements = nullptr;
-//	listeJeux.elements = nouvelleListe;
-//	if ((listeJeux.nElements == listeJeux.capacite / 2 )&&(listeJeux.nElements !=0)) {
-//		Jeu** listeTemporaire;
-//		listeJeux.capacite /= 2;
-//		listeTemporaire = new Jeu* [listeJeux.capacite];
-//		span<Jeu*>laListe;
-//		laListe = spanListeJeux(listeJeux);
-//		for (auto [j, leJeu] : enumerate(laListe)) {
-//			listeTemporaire[j] = leJeu;
-//		}
-//		delete[] listeJeux.elements;
-//		listeJeux.elements = nullptr;
-//		listeJeux.elements = listeTemporaire;
-//	}
-//	else if (listeJeux.nElements == 0) {
-//		delete[] listeJeux.elements;
-//		listeJeux.elements = nullptr;
-//	}
-//	cout << "jeu " << jeu->titre << " est enleve" << endl;
-//}
 void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
 	span<Jeu*> lj = spanListeJeux(listeJeux);
 	for (auto [i, leJeu] : enumerate(lj)) {
@@ -176,7 +143,7 @@ void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		}
 	}
 }
-Jeu* lireJeu(istream& fichier)
+Jeu* lireJeu(istream& fichier, ListeJeux lj)
 {
 	Jeu jeu = {};
 	jeu.titre = lireString(fichier);
@@ -187,6 +154,7 @@ Jeu* lireJeu(istream& fichier)
 	Designer** tableauDesignerPtr = new Designer* [jeu.designers.capacite];
 	jeu.designers.elements = tableauDesignerPtr;
 	Jeu* jeuPtr = new  Jeu{ jeu };
+	cout << "jeu: " << jeu.titre << "alloue" << endl;
 	
 
 
@@ -197,7 +165,7 @@ Jeu* lireJeu(istream& fichier)
 	
 	for ([[maybe_unused]] int i : iter::range(jeu.designers.nElements)) {
 
-		Designer* designerPtr = lireDesigner(fichier);  //TODO: Mettre le designer dans la liste des designer du jeu.
+		Designer* designerPtr = lireDesigner(fichier, lj);  //TODO: Mettre le designer dans la liste des designer du jeu.
 		jeu.designers.elements[i] = designerPtr;
 		
 		
@@ -213,26 +181,28 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	fichier.exceptions(ios::failbit);
 	int nElements = lireUint16(fichier);
 	ListeJeux listeJeux = {};
-	listeJeux.nElements = nElements;
-	listeJeux.capacite = nElements;
-	Jeu** tableauJeuPtr = new Jeu * [listeJeux.capacite];
+	listeJeux.nElements = 0 /*nElements*/;
+	listeJeux.capacite = 0/*nElements*/;
+	Jeu** tableauJeuPtr = nullptr/*new Jeu * [listeJeux.capacite]*/;
 	listeJeux.elements = tableauJeuPtr;
 	for ([[maybe_unused]] int n : iter::range(nElements))
 	{
-		Jeu* jeuPtr = lireJeu(fichier);//TODO: Ajouter le jeu à la ListeJeux.
-		listeJeux.elements[n] = jeuPtr;
+		Jeu* jeuPtr = lireJeu(fichier,listeJeux);//TODO: Ajouter le jeu à la ListeJeux.
+		//listeJeux.elements[n] = jeuPtr;
+		ajouterJeu(jeuPtr, listeJeux);
 	}
-	for (int i : iter::range(nElements)) {
+	/*for (int i : iter::range(nElements)) {
 		for (int j : iter::range((*(listeJeux.elements[i])).designers.nElements)) {
 			Designer* designerExistant = chercheDesigner((*(listeJeux.elements[i])).designers.elements[j]->nom, listeJeux);
 			Designer*& designerCourant = (*(listeJeux.elements[i])).designers.elements[j];
 			if (designerExistant != designerCourant) {
 				delete designerCourant;
+				cout << "designer delete" << endl;
 				designerCourant = designerExistant;
 
 			}
 		}
-	}
+	}*/
 
 	return listeJeux; //TODO: Renvoyer la ListeJeux.
 }
@@ -268,8 +238,10 @@ void detruireJeu(Jeu* jeu) {
 
 //TODO: Fonction pour détruire une ListeJeux et tous ses jeux.
 void detruireListeJeux(ListeJeux & lj) {
+	uint8_t compteur = 0;
 	while(lj.nElements) {
-		detruireJeu(lj.elements[0]);
+		detruireJeu(lj.elements[compteur]);
+		compteur += 1;
 		lj.nElements -= 1;
 	}
 	//delete[] lj.elements;
@@ -302,6 +274,12 @@ void afficherListeJeux(ListeJeux& listeJeux) {
 	static const string ligneSeparation = "\n\033[35m**************************************\033[0m\n";
 	for (int i : iter::range(listeJeux.nElements)) {
 		afficherInfoJeu(*listeJeux.elements[i]);
+		for (int j : iter::range(listeJeux.elements[i]->designers.nElements)) {
+			afficherInfoDesigner(*listeJeux.elements[i]->designers.elements[j]);
+			for (int k : iter::range(listeJeux.elements[i]->designers.elements[j]->listeJeuxParticipes.nElements)) {
+				cout << listeJeux.elements[i]->designers.elements[j]->listeJeuxParticipes.elements[k]->titre;
+			}
+		}
 		cout << ligneSeparation << endl;
 	}
 }
@@ -309,16 +287,16 @@ void afficherListeJeux(ListeJeux& listeJeux) {
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-	Jeu* tableau[5];
+	//Jeu* tableau[5];
 	//tableau[0] = &jeu1;
 	//tableau[1] = &jeu2;
-	ListeJeux lj;
-	lj.elements = tableau;
-	lj.nElements = 0;
-	lj.capacite = 0;
-	Jeu* jeuUn = new Jeu{ "mario", 1999, "emem"};
-	Jeu* jeuDeux = new Jeu{ "pacman", 2000, "abdul"};
-	Jeu* jeuTrois = new Jeu{ "froggy", 1444, "edouard"};
+	//ListeJeux lj;
+	//lj.elements = tableau;
+	//lj.nElements = 0;
+	//lj.capacite = 0;
+	//Jeu* jeuUn = new Jeu{ "mario", 1999, "emem"};
+	//Jeu* jeuDeux = new Jeu{ "pacman", 2000, "abdul"};
+	//Jeu* jeuTrois = new Jeu{ "froggy", 1444, "edouard"};
 
 #pragma region "Bibliothèque du cours"
 	// Permet sous Windows les "ANSI escape code" pour changer de couleur
@@ -342,70 +320,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	afficherListeJeux(listeJeu);
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
-	/*ajouterJeu(jeuTrois, lj);
-	ajouterJeu(jeuDeux, lj);
-	ajouterJeu(jeuUn, lj);*/
-	/*enleverJeu(jeu3, lj);
-	enleverJeu(jeu2, lj);
-	enleverJeu(jeu1, lj);*/
-	/*Designer* designer1 = new Designer;
-	designer1->nom = "Jason";
-	designer1->anneeNaissance = 2006;
-	designer1->listeJeuxParticipes = lj;
-	Designer* designer2 = new Designer;
-	designer2->nom = "Aliou";
-	designer2->anneeNaissance = 2009;
-	designer2->listeJeuxParticipes = lj;
-	Designer* designer3 = new Designer;
-	designer3->nom = "Edouard";
-	designer3->anneeNaissance = 2005;
-	designer3->listeJeuxParticipes = lj;*/
-	//ajouterJeu(&jeu3, lj);
-	//ajouterJeu(&jeu2, lj);
-	//ajouterJeu(&jeu1, lj);
-	//enleverJeu(&jeu2, lj);
-	//enleverJeu(&jeu3, lj);
-	//enleverJeu(&jeu1, lj);
-	
-	/*Designer designer1;
-	designer1.nom = "Jason";
-	designer1.anneeNaissance = 2006;
-	designer1.listeJeuxParticipes = lj;
-	Designer designer2;
-	designer2.nom = "Aliou";
-	designer2.anneeNaissance = 2009;
-	designer2.listeJeuxParticipes = lj;
-	Designer designer3;
-	designer3.nom = "Edouard";
-	designer3.anneeNaissance = 2005;
-	designer3.listeJeuxParticipes = lj;*/
-
-	/*ListeDesigners desiListe;
-	desiListe.nElements = 3;
-	desiListe.capacite = 4;
-	
-	Designer* tableaud[5] = { designer1, designer2, designer3 };
-
-	desiListe.elements = tableaud;
-	jeuUn->designers = desiListe;
-	jeuDeux->designers = desiListe;
-	jeuTrois->designers = desiListe;*/
-
-
-
-	cout << "fin" << endl;
-	//chercheDesigner("Aliou", lj, desiListe);
 	detruireListeJeux(listeJeu);
 	cout << "fin" << endl;
 
-	//Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
-	//desiListe.elements = tableaud;
-	//jeu1.designers = desiListe;
-
-
-
-
-
-	//chercheDesigner("Aliou", lj);
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
