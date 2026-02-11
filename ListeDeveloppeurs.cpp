@@ -7,7 +7,9 @@ ListeDeveloppeurs::ListeDeveloppeurs() {
 }
 
 ListeDeveloppeurs::ListeDeveloppeurs(unsigned nElements, unsigned capacite, Developpeur** elements) {
-
+	this->nElements = nElements;
+	this->capacite = capacite;
+	this->elements = elements;
 }
 
 void ListeDeveloppeurs::afficher() {
