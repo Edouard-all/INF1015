@@ -2,7 +2,7 @@
 * Programme qui détermine si une année lue du clavier est bissextile.
 * \file   main.cpp
 * \author Aliou Diallo et Édouard Allaire
-* \date   22 janvier 2009
+* \date   11 février 2026
 * Créé le 30 janvier 2026
 */
 #include "Jeu.hpp"
@@ -99,7 +99,7 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.capacite = 1;
 		listeJeux.elements = new Jeu*[1];
 		listeJeux.elements[0] = jeu;
-		cout << "ajout de " << jeu->titre << endl;
+		//cout << "ajout de " << jeu->titre << endl;
 		listeJeux.nElements = 1;
 	}
 	else if (listeJeux.nElements == listeJeux.capacite) {
@@ -116,7 +116,7 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.elements = nouvelleListe;
 		listeJeux.elements[listeJeux.nElements] = jeu;
 		listeJeux.nElements += 1;
-		cout << "ajout de " << jeu->titre << endl;
+		//cout << "ajout de " << jeu->titre << endl;
 
 	}
 	else {
@@ -321,6 +321,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 	detruireListeJeux(listeJeu);
+	cout << "fin" << endl;
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
