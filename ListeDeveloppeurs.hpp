@@ -14,8 +14,9 @@ class ListeDeveloppeurs
 		ListeDeveloppeurs(unsigned nElements, unsigned capacite, Developpeur** elements);
 		~ListeDeveloppeurs();
 		void afficher() ;
-		void ajouterDeveloppeur();
-		void retirerDeveloppeur();
+		void ajouterDeveloppeur(Developpeur* developpeur);
+		void retirerDeveloppeur(Developpeur* developpeur); 
+		static span<Developpeur*>spanListeDeveloppeurs(ListeDeveloppeurs listeDeveloppeur);
 
 	private:
 		unsigned nElements;
