@@ -23,5 +23,7 @@ void ListeDeveloppeurs::retirerDeveloppeur() {
 }
 
 ListeDeveloppeurs::~ListeDeveloppeurs() {
+	delete[] this;
+	this->elements = nullptr;
 
 }
