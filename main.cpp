@@ -2,7 +2,7 @@
 * Programme qui détermine si une année lue du clavier est bissextile.
 * \file   main.cpp
 * \author Aliou Diallo et Édouard Allaire
-* \date   22 janvier 2009
+* \date   11 février 2026
 * Créé le 30 janvier 2026
 */
 #include "Jeu.hpp"
@@ -84,8 +84,8 @@ Designer* lireDesigner(istream& fichier)
 	// Vous pouvez enlever l'affichage une fois que le tout fonctionne.
 	Designer* designerPtr = new Designer(designer);
 	
-	cout << "Designer est alloue" << endl;
-	cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
+	//cout << "Designer est alloue" << endl;
+	//cout << designer.nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
 }
 
@@ -97,7 +97,7 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.capacite = 1;
 		listeJeux.elements = new Jeu*[1];
 		listeJeux.elements[0] = jeu;
-		cout << "ajout de " << jeu->titre << endl;
+		//cout << "ajout de " << jeu->titre << endl;
 		listeJeux.nElements = 1;
 	}
 	else if (listeJeux.nElements == listeJeux.capacite) {
@@ -114,13 +114,13 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 		listeJeux.elements = nouvelleListe;
 		listeJeux.elements[listeJeux.nElements] = jeu;
 		listeJeux.nElements += 1;
-		cout << "ajout de " << jeu->titre << endl;
+		//cout << "ajout de " << jeu->titre << endl;
 
 	}
 	else {
 		listeJeux.nElements += 1;
 		listeJeux.elements[listeJeux.nElements] = jeu;
-		cout << "allocation" << jeu->titre << endl;
+		//cout << "allocation" << jeu->titre << endl;
 	}
 }
 
@@ -348,7 +348,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	/*enleverJeu(jeu3, lj);
 	enleverJeu(jeu2, lj);
 	enleverJeu(jeu1, lj);*/
-	Designer* designer1 = new Designer;
+	/*Designer* designer1 = new Designer;
 	designer1->nom = "Jason";
 	designer1->anneeNaissance = 2006;
 	designer1->listeJeuxParticipes = lj;
@@ -359,7 +359,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	Designer* designer3 = new Designer;
 	designer3->nom = "Edouard";
 	designer3->anneeNaissance = 2005;
-	designer3->listeJeuxParticipes = lj;
+	designer3->listeJeuxParticipes = lj;*/
 	//ajouterJeu(&jeu3, lj);
 	//ajouterJeu(&jeu2, lj);
 	//ajouterJeu(&jeu1, lj);
@@ -380,7 +380,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	designer3.anneeNaissance = 2005;
 	designer3.listeJeuxParticipes = lj;*/
 
-	ListeDesigners desiListe;
+	/*ListeDesigners desiListe;
 	desiListe.nElements = 3;
 	desiListe.capacite = 4;
 	
@@ -389,13 +389,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	desiListe.elements = tableaud;
 	jeuUn->designers = desiListe;
 	jeuDeux->designers = desiListe;
-	jeuTrois->designers = desiListe;
+	jeuTrois->designers = desiListe;*/
 
 
 
-
+	cout << "fin" << endl;
 	//chercheDesigner("Aliou", lj, desiListe);
 	detruireListeJeux(listeJeu);
+	cout << "fin" << endl;
 
 	//Designer* tableaud[5] = { &designer1, &designer2, &designer3 };
 	//desiListe.elements = tableaud;
