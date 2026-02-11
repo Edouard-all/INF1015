@@ -215,7 +215,7 @@ void detruireJeu(Jeu* jeu) {
 	for (Designer* designer : ld) {
 		Jeu** listeTemporaire = designer->listeJeuxParticipes.elements;
 		span<Jeu*> ljd(listeTemporaire, designer->listeJeuxParticipes.nElements);
-		for (uint8_t i : iter::range<uint8_t>(ljd.size(),1, -1)) {
+		for (int i : iter::range<int>(ljd.size(),0, -1)) {
 			if (jeu == designer->listeJeuxParticipes.elements[i-1])
 				enleverJeu(jeu, designer->listeJeuxParticipes);
 		}
@@ -229,7 +229,7 @@ void detruireJeu(Jeu* jeu) {
 			delete designer;
 			cout << "designer desaloue" << endl;
 			designer = nullptr;
-			break;
+			//break;
 		}
 	}
 	for (uint8_t i : iter::range(ld.size())) {
@@ -251,6 +251,7 @@ void detruireListeJeux(ListeJeux & lj) {
 		lj.nElements -= 1;
 	}
 	delete[] lj.elements;
+	
 	cout << "la liste est detruite";
 }
 //TODO: Fonction pour afficher les infos d'un designer.
