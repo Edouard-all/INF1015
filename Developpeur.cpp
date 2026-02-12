@@ -24,7 +24,7 @@ Developpeur::~Developpeur() {
 	cout << "develeloppeur detruit" << endl;
 }
 
-const std::string& Developpeur::obtenirNom() const {
+const std::string Developpeur::obtenirNom() const {
 	return paireNomJeux_.first;
 }
 
@@ -47,21 +47,22 @@ void Developpeur::mettreAJourListeJeuxDeveloppeur(const ListeJeux& listeJeux) {
 	listeJeuxDeveloppeur.elements = new Jeu* [nJeuxDeveloppeur];
 	listeJeuxDeveloppeur.capacite = nJeuxDeveloppeur;
 	listeJeuxDeveloppeur.nElements = 0;
-	for (auto [i, jeu] : enumerate(listeJeuSpanneDeveloppeur)) {
+	for (auto [i, jeu] : enumerate(listeJeuSpanneDeveloppeur)) { 
 		listeJeuxDeveloppeur.elements[i] = jeu;
 		listeJeuxDeveloppeur.nElements++;
 	}
 	for (Jeu* jeu : listeJeuSpanne) {
-		for (Jeu* jeuDeveloppeur : listeJeuSpanneDeveloppeur) {
+		
 			//uint8_t compteur = 0;
-			if (jeu->titre != jeuDeveloppeur->titre) {
+			if (jeu->developpeur == paireNomJeux_.first) {
 				listeJeuxDeveloppeur.elements[paireNomJeux_.second.nElements] = jeu;
 				listeJeuxDeveloppeur.nElements++;
 
 			}
-		}
+		
 	}
 	delete paireNomJeux_.second.elements;
+	
 	paireNomJeux_.second = listeJeuxDeveloppeur;
 }
 

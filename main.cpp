@@ -302,20 +302,21 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 	span<Jeu*>listeJeuxSpanne = spannerListeJeux(listeJeux);
+	ListeDeveloppeurs listeDeveloppeurs;
 	for (Jeu* jeu : listeJeuxSpanne) {
-		ListeDeveloppeurs listeDeveloppeurs;
-		Developpeur developpeur(jeu->developpeur);
-		string nom = developpeur.obtenirNom();
-		uint8_t nJeuxDeveloppe = developpeur.compterNombreJeuxDeveloppe(listeJeux);
+		//ListeDeveloppeurs listeDeveloppeurs;
+		Developpeur* developpeur = new Developpeur(jeu->developpeur);
+		string nom = developpeur->obtenirNom();
+		uint8_t nJeuxDeveloppe = developpeur->compterNombreJeuxDeveloppe(listeJeux);
 		cout << nom << " " << nJeuxDeveloppe << endl;
-		developpeur.mettreAJourListeJeuxDeveloppeur(listeJeux);
-		listeDeveloppeurs.ajouterDeveloppeur(&developpeur);
+		developpeur->mettreAJourListeJeuxDeveloppeur(listeJeux);
+		listeDeveloppeurs.ajouterDeveloppeur(developpeur);
 		listeDeveloppeurs.afficher();
 		unsigned capacite = listeDeveloppeurs.obtenirCapacite();
 		unsigned nElements = listeDeveloppeurs.obtenirNElements();
 		Developpeur** elements = listeDeveloppeurs.obtenirElements();
 		cout << capacite << " " << nElements << endl;
-		listeDeveloppeurs.retirerDeveloppeur(developpeur);
+		//listeDeveloppeurs.retirerDeveloppeur(developpeur);
 	}
 	detruireListeJeux(listeJeux);
 	//span<Developpeur*> listeDeveloppeursSpanne = listeDeveloppeurs.spanListeDeveloppeurs(listeDeveloppeurs);
