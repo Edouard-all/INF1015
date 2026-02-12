@@ -55,8 +55,14 @@ void ListeDeveloppeurs::ajouterDeveloppeur(Developpeur* developpeur) {
 	}
 }
 
-	void ListeDeveloppeurs::retirerDeveloppeur(Developpeur* developpeur) {
-		cout << "" << endl;
+	void ListeDeveloppeurs::retirerDeveloppeur(Developpeur& developpeur) {
+		for (Developpeur* dev : spanListeDeveloppeurs(*this)) {
+			if (dev->obtenirNom() == developpeur.obtenirNom()) {
+				dev = nullptr;
+				this->nElements -= 1;
+				break;
+			}
+		}
 	}
 
 ListeDeveloppeurs::~ListeDeveloppeurs() {
