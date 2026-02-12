@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "Developpeur.hpp"
+using namespace std;
+#include <span>
 
 
 
@@ -13,10 +15,13 @@ class ListeDeveloppeurs
 		ListeDeveloppeurs();
 		ListeDeveloppeurs(unsigned nElements, unsigned capacite, Developpeur** elements);
 		~ListeDeveloppeurs();
-		void afficher() ;
+		void afficher() const;
+		unsigned obtenirNElements() const;
+		unsigned obtenirCapacite() const;
+		Developpeur** obtenirElements() const;
 		void ajouterDeveloppeur(Developpeur* developpeur);
 		void retirerDeveloppeur(Developpeur* developpeur); 
-		static span<Developpeur*>spanListeDeveloppeurs(ListeDeveloppeurs listeDeveloppeur);
+		span<Developpeur*> spanListeDeveloppeurs(const ListeDeveloppeurs& listeDeveloppeur) const;
 
 	private:
 		unsigned nElements;

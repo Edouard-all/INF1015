@@ -7,8 +7,8 @@
 using namespace std;
 using namespace iter;
 
-span<Developpeur*> ListeDeveloppeurs::spanListeDeveloppeurs(ListeDeveloppeurs listeDeveloppeurs) {
-	return span<Developpeur*>(*listeDeveloppeurs.elements, listeDeveloppeurs.nElements);
+span<Developpeur*> ListeDeveloppeurs::spanListeDeveloppeurs(const ListeDeveloppeurs& listeDeveloppeurs) const {
+	return span<Developpeur*>(listeDeveloppeurs.obtenirElements(),listeDeveloppeurs.obtenirNElements());
 }
 
 ListeDeveloppeurs::ListeDeveloppeurs() {
@@ -23,10 +23,10 @@ ListeDeveloppeurs::ListeDeveloppeurs(unsigned nElements, unsigned capacite, Deve
 	this->elements = elements;
 }
 
-void ListeDeveloppeurs::afficher() {
+void ListeDeveloppeurs::afficher() const {
 	for (int i : iter::range((*this).nElements)) {
-		cout << this->elements[i].name << endl; // à modifier selon la façon d'accéder au nom d'un developpeur
-		cout << this->elements[i].afficher() << endl;// à modifier selon le nom de la méthode dans développeur
+		cout << this->elements[i]->obtenirNom() << endl; // à modifier selon la façon d'accéder au nom d'un developpeur
+		this->elements[i]->afficherJeuxDeveloppe();// à modifier selon le nom de la méthode dans développeur
 	}
 }
 
@@ -60,7 +60,19 @@ void ListeDeveloppeurs::ajouterDeveloppeur(Developpeur* developpeur) {
 	}
 
 ListeDeveloppeurs::~ListeDeveloppeurs() {
-	delete[] this;
+	delete[] this->elements;
 	this->elements = nullptr;
 
+}
+
+unsigned ListeDeveloppeurs::obtenirNElements() const {
+	return this->nElements;
+}
+
+unsigned ListeDeveloppeurs::obtenirCapacite() const {
+	return this->capacite;
+}
+
+Developpeur** ListeDeveloppeurs::obtenirElements() const {
+	return this->elements;
 }

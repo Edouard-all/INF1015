@@ -85,8 +85,8 @@ Designer* lireDesigner(istream& fichier, ListeJeux lj)
 	Designer* designerPtr = chercheDesigner(designer.nom, lj);
 	if (designerPtr == nullptr) {
 		designerPtr = new Designer(designer);
-		cout << "Designer est alloue" << endl;
-		cout << designer.nom << endl;
+		//cout << "Designer est alloue" << endl;
+		//cout << designer.nom << endl;
 	}//TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return designerPtr; //TODO: Retourner le pointeur vers le designer crée.
 }
@@ -122,7 +122,7 @@ void ajouterJeu(Jeu* jeu, ListeJeux& listeJeux) {
 	else {
 		listeJeux.elements[listeJeux.nElements] = jeu;
 		listeJeux.nElements += 1;
-		cout << "ajout de " << jeu->titre << endl;
+		//cout << "ajout de " << jeu->titre << endl;
 	}
 }
 
@@ -138,7 +138,7 @@ void enleverJeu(Jeu* jeu, ListeJeux& listeJeux) {
 			listeJeux.elements[i] = jeuTemp;
 			listeJeux.nElements -= 1;
 			//jeuTemp = listeJeux.elements[2];
-			cout << "Jeu " << jeu->titre << " enleve" << endl;
+			//cout << "Jeu " << jeu->titre << " enleve" << endl;
 			break;
 		}
 	}
@@ -154,7 +154,7 @@ Jeu* lireJeu(istream& fichier, ListeJeux listeJeux)
 	Designer** tableauDesignerPtr = new Designer* [jeu.designers.capacite];
 	jeu.designers.elements = tableauDesignerPtr;
 	Jeu* jeuPtr = new  Jeu{ jeu };
-	cout << "jeu: " << jeu.titre << "alloue" << endl;
+	//cout << "jeu: " << jeu.titre << "alloue" << endl;
 
 
 
@@ -211,9 +211,9 @@ void detruireJeu(Jeu* jeu) {
 		if (designer->listeJeuxParticipes.nElements == 0) {
 			delete[] designer->listeJeuxParticipes.elements;
 			designer->listeJeuxParticipes.elements = nullptr;
-			cout << "listejeuxparticipe desaloue" << endl;
+			//cout << "listejeuxparticipe desaloue" << endl;
 			delete designer;
-			cout << "designer desaloue" << endl;
+			//cout << "designer desaloue" << endl;
 			designer = nullptr;
 		}
 	}
@@ -223,7 +223,7 @@ void detruireJeu(Jeu* jeu) {
 	delete[] jeu->designers.elements;
 	string nom = jeu->titre;
 	delete jeu;
-	cout << "jeu " << nom << " desaloue" << endl;
+	//cout << "jeu " << nom << " desaloue" << endl;
 }
 
 
@@ -235,7 +235,7 @@ void detruireListeJeux(ListeJeux& listeJeux) {
 	}
 	delete[] listeJeux.elements;
 
-	cout << "la liste est detruite" << endl;
+	//cout << "la liste est detruite" << endl;
 }
 //TODO: Fonction pour afficher les infos d'un designer.
 void afficherInfoDesigner(Designer& designer) {
@@ -285,7 +285,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	bibliotheque_cours::activerCouleursAnsi();
 #pragma endregion
 
-	int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
+	//int* fuite = new int;  // Pour vérifier que la détection de fuites fonctionne; un message devrait dire qu'il y a une fuite à cette ligne.
 
 	ListeJeux listeJeux = creerListeJeux("jeux.bin"); //TODO: Appeler correctement votre fonction de création de la liste de jeux.
 
@@ -301,7 +301,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
 	detruireListeJeux(listeJeux);
-	cout << "fin" << endl;
+	//cout << "fin" << endl;
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
 }
