@@ -20,7 +20,7 @@ class ListeDeveloppeurs
 		unsigned obtenirCapacite() const;
 		Developpeur** obtenirElements() const;
 		void ajouterDeveloppeur(Developpeur* developpeur);
-		void retirerDeveloppeur(Developpeur* developpeur); 
+		void retirerDeveloppeur(Developpeur& developpeur); 
 		span<Developpeur*> spanListeDeveloppeurs(const ListeDeveloppeurs& listeDeveloppeur) const;
 
 	private:
