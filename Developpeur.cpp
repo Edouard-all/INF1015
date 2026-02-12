@@ -20,6 +20,8 @@ Developpeur::Developpeur(const std::string& nom) {
 
 Developpeur::~Developpeur() {
 	delete[] paireNomJeux_.second.elements;
+	paireNomJeux_.second.elements = nullptr;
+	cout << "develeloppeur detruit" << endl;
 }
 
 const std::string& Developpeur::obtenirNom() const {
@@ -51,13 +53,15 @@ void Developpeur::mettreAJourListeJeuxDeveloppeur(const ListeJeux& listeJeux) {
 	}
 	for (Jeu* jeu : listeJeuSpanne) {
 		for (Jeu* jeuDeveloppeur : listeJeuSpanneDeveloppeur) {
-			uint8_t compteur = 0;
+			//uint8_t compteur = 0;
 			if (jeu->titre != jeuDeveloppeur->titre) {
-				listeJeuxDeveloppeur.elements[paireNomJeux_.second.nElements + compteur] = jeu;
-				compteur++;
+				listeJeuxDeveloppeur.elements[paireNomJeux_.second.nElements] = jeu;
+				listeJeuxDeveloppeur.nElements++;
+
 			}
 		}
 	}
+	delete paireNomJeux_.second.elements;
 	paireNomJeux_.second = listeJeuxDeveloppeur;
 }
 

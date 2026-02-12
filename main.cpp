@@ -6,6 +6,7 @@
 * Créé le 30 janvier 2026
 */
 #include "Jeu.hpp"
+#include "ListeDeveloppeurs.hpp"
 #include <iostream>
 #include <fstream>
 #include <span>
@@ -300,7 +301,28 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	afficherListeJeux(listeJeux);
 
 	//TODO: Faire les appels à toutes vos fonctions/méthodes pour voir qu'elles fonctionnent et avoir 0% de lignes non exécutées dans le programme (aucune ligne rouge dans la couverture de code; c'est normal que les lignes de "new" et "delete" soient jaunes).  Vous avez aussi le droit d'effacer les lignes du programmes qui ne sont pas exécutée, si finalement vous pensez qu'elle ne sont pas utiles.
+	span<Jeu*>listeJeuxSpanne = spannerListeJeux(listeJeux);
+	for (Jeu* jeu : listeJeuxSpanne) {
+		ListeDeveloppeurs listeDeveloppeurs;
+		Developpeur developpeur(jeu->developpeur);
+		string nom = developpeur.obtenirNom();
+		uint8_t nJeuxDeveloppe = developpeur.compterNombreJeuxDeveloppe(listeJeux);
+		cout << nom << " " << nJeuxDeveloppe << endl;
+		developpeur.mettreAJourListeJeuxDeveloppeur(listeJeux);
+		listeDeveloppeurs.ajouterDeveloppeur(&developpeur);
+		listeDeveloppeurs.afficher();
+		unsigned capacite = listeDeveloppeurs.obtenirCapacite();
+		unsigned nElements = listeDeveloppeurs.obtenirNElements();
+		Developpeur** elements = listeDeveloppeurs.obtenirElements();
+		cout << capacite << " " << nElements << endl;
+		listeDeveloppeurs.retirerDeveloppeur(developpeur);
+	}
 	detruireListeJeux(listeJeux);
+	//span<Developpeur*> listeDeveloppeursSpanne = listeDeveloppeurs.spanListeDeveloppeurs(listeDeveloppeurs);
+	//for (Developpeur* developpeur : listeDeveloppeursSpanne) {
+		//listeDeveloppeurs.retirerDeveloppeur(*developpeur);
+	//}
+	//listeDeveloppeurs.~ListeDeveloppeurs();
 	//cout << "fin" << endl;
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
