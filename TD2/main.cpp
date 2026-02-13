@@ -305,25 +305,34 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	ListeDeveloppeurs listeDeveloppeurs;
 	for (Jeu* jeu : listeJeuxSpanne) {
 		//ListeDeveloppeurs listeDeveloppeurs;
-		Developpeur* developpeur = new Developpeur(jeu->developpeur);
-		string nom = developpeur->obtenirNom();
-		uint8_t nJeuxDeveloppe = developpeur->compterNombreJeuxDeveloppe(listeJeux);
-		cout << nom << " " << nJeuxDeveloppe << endl;
-		developpeur->mettreAJourListeJeuxDeveloppeur(listeJeux);
-		listeDeveloppeurs.ajouterDeveloppeur(developpeur);
-		listeDeveloppeurs.afficher();
-		unsigned capacite = listeDeveloppeurs.obtenirCapacite();
-		unsigned nElements = listeDeveloppeurs.obtenirNElements();
-		Developpeur** elements = listeDeveloppeurs.obtenirElements();
-		cout << capacite << " " << nElements << endl;
-		//listeDeveloppeurs.retirerDeveloppeur(developpeur);
+		Developpeur* developpeur = nullptr;
+		span<Developpeur*> listeDeveloppeursSpanner = listeDeveloppeurs.spanListeDeveloppeurs(listeDeveloppeurs);
+		bool developpeurExiste = false;
+		for (Developpeur* dev : listeDeveloppeursSpanner) {
+			if (dev->obtenirNom() == jeu->developpeur) {
+				developpeurExiste = true;
+			}
+		}
+		if (not developpeurExiste) {
+			developpeur = new Developpeur(jeu->developpeur);
+			string nom = developpeur->obtenirNom();
+			uint8_t nJeuxDeveloppe = developpeur->compterNombreJeuxDeveloppe(listeJeux);
+			cout << nom << " " << nJeuxDeveloppe << endl;
+			developpeur->mettreAJourListeJeuxDeveloppeur(listeJeux);
+			listeDeveloppeurs.ajouterDeveloppeur(developpeur);
+			listeDeveloppeurs.afficher();
+			unsigned capacite = listeDeveloppeurs.obtenirCapacite();
+			unsigned nElements = listeDeveloppeurs.obtenirNElements();
+			Developpeur** elements = listeDeveloppeurs.obtenirElements();
+			cout << capacite << " " << nElements << endl;
+		}
 	}
 	detruireListeJeux(listeJeux);
-	//span<Developpeur*> listeDeveloppeursSpanne = listeDeveloppeurs.spanListeDeveloppeurs(listeDeveloppeurs);
-	//for (Developpeur* developpeur : listeDeveloppeursSpanne) {
-		//listeDeveloppeurs.retirerDeveloppeur(*developpeur);
-	//}
-	//listeDeveloppeurs.~ListeDeveloppeurs();
+	span<Developpeur*> listeDeveloppeursSpanne = listeDeveloppeurs.spanListeDeveloppeurs(listeDeveloppeurs);
+	for (Developpeur* developpeur : listeDeveloppeursSpanne) {
+		listeDeveloppeurs.retirerDeveloppeur(*developpeur);
+	}
+	listeDeveloppeurs.~ListeDeveloppeurs();
 	//cout << "fin" << endl;
 
 	//TODO: Détruire tout avant de terminer le programme.  Devrait afficher "Aucune fuite detectee." a la sortie du programme; il affichera "Fuite detectee:" avec la liste des blocs, s'il manque des delete.
