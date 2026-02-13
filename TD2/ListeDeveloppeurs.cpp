@@ -57,11 +57,14 @@ void ListeDeveloppeurs::ajouterDeveloppeur(Developpeur* developpeur) {
 
 	void ListeDeveloppeurs::retirerDeveloppeur(Developpeur& developpeur) {
 		for (Developpeur* dev : spanListeDeveloppeurs(*this)) {
-			if (dev->obtenirNom() == developpeur.obtenirNom()) {
-				dev = nullptr;
+			/*if (dev->obtenirNom() == developpeur.obtenirNom()) {
+				delete dev;
 				this->nElements -= 1;
 				break;
-			}
+			}*/
+			dev->~Developpeur();
+			dev = nullptr;
+			nElements--;
 		}
 	}
 

@@ -12,7 +12,7 @@ public:
 	Developpeur();
 	Developpeur(const std::string& nom);
 	~Developpeur();
-	const std::string& obtenirNom() const;
+	const std::string obtenirNom() const;
 	uint8_t compterNombreJeuxDeveloppe(const ListeJeux& listeJeux) const;
 	void mettreAJourListeJeuxDeveloppeur(const ListeJeux& lisreJeux);
 	void afficherJeuxDeveloppe() const;
