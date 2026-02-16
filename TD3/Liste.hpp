@@ -17,7 +17,7 @@ public:
 		elements_ = make_unique<T[]>[0];
 	}
 
-	Liste(T, unsigned longueur) {
+	Liste(unsigned longueur) {
 		capacite_ = longueur;
 		nElements_ = 0;
 		elements_ = make_unique<T[]>[longueur];
