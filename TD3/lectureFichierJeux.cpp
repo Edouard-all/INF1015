@@ -3,7 +3,10 @@
 #include <fstream>
 #include <cstdint>
 #include "cppitertools/range.hpp"
+#include "Liste.hpp"
+
 using namespace std;
+using ListeJeux = Liste<Jeu>;
 
 using UInt8  = uint8_t;
 using UInt16 = uint16_t;
@@ -33,9 +36,21 @@ string lireString(istream& fichier)
 }
 #pragma endregion
 
-Concepteur* chercherConcepteur(ListeJeux& listeJeux, const string& nom)
+
+
+shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& nom)
 {
 	//TODO: Compléter la fonction (équivalent de trouverDesigner du TD2).
+	for (const shared_ptr<Jeu> j : listeJeux.spanneListe()) {
+		// Normalement on voudrait retourner un pointeur const, mais cela nous
+		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
+		// fonction.
+		for (shared_ptr<Concepteur> d : j->ListeConcepteurs.spanneListe()) {
+			if (d->nom == nom)
+				return d;
+		}
+	}
+	return nullptr;
 	return {};
 }
 
