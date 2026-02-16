@@ -37,3 +37,4 @@ private:
 	ListeConcepteur listeConcepteur_;
 };
 
+  //TODO: Remplacer cette définition (qui est ici juste pour que le code fourni compile) pour que ListeJeux soit une Liste<Jeu> .

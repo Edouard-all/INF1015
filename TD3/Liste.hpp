@@ -2,6 +2,7 @@
 #include <iostream>
 #include "cppitertools/range.hpp"
 #include <cassert>
+#include <span>
 
 using namespace std;
 
@@ -14,13 +15,13 @@ public:
 	Liste() {
 		capacite_ = 0;
 		nElements_ = 0;
-		elements_ = make_unique<T[]>[0];
+		elements_ = make_unique<shared_ptr<T>>[0];
 	}
 
 	Liste(unsigned longueur) {
 		capacite_ = longueur;
 		nElements_ = 0;
-		elements_ = make_unique<T[]>[longueur];
+		elements_ = make_unique<shared_ptr<T>>[longueur];
 	}
 
 	Liste (const Liste& other) {
@@ -29,6 +30,11 @@ public:
 	Liste (Liste&& other) {
 		/*constructeur move*/
 	}
+	shared_ptr<T> operator[](uint8_t index) 
+		return elements_[index];
+
+	span<shared_ptr<T>> spanneListe() const
+		return span(elements_, nElements_);
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
 	{
