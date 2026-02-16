@@ -86,8 +86,9 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	int nElements = lireUint16(f);
 	//TODO: Compléter la fonction.
 	ListeJeux listeJeux;
-	for ([[maybe_unused]] int i : iter::range(nElements))
-		lireJeu(f, listeJeux);
+	for ([[maybe_unused]] int i : iter::range(nElements)) {
+		listeJeux.ajouterElement(lireJeu(f, listeJeux));
+	}
 
-	return {};
+	return listeJeux;
 }
