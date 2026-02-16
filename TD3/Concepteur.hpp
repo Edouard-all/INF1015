@@ -5,7 +5,16 @@ class Concepteur
 {
 public:
 	//TODO: Un constructeur par défaut et un constructeur paramétré.
-
+	Concepteur(){ 
+		nom_ = "";
+		anneeNaissance_ = 0;
+		pays_ = "";
+	}
+	Concepteur(string nom, int anneNaissance, string pays) {
+		nom_ = nom;
+		anneeNaissance_ = anneNaissance;
+		pays_ = pays;
+	}
 	const std::string& getNom() const     { return nom_; }
 	void setNom(std::string nom)          { nom_ = move(nom); }
 	int getAnneeNaissance() const         { return anneeNaissance_; }

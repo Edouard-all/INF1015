@@ -11,7 +11,7 @@ class Liste
 {
 public:
 	//TODO: Constructeurs et surcharges d'opérateurs
-	Liste(T) {
+	Liste() {
 		capacite_ = 0;
 		nElements_ = 0;
 		elements_ = make_unique<T[]>[0];

@@ -22,6 +22,6 @@ private:
 	unsigned anneeSortie_;
 	std::string developpeur_;
 	//TODO: Attribut de la liste des concepteurs du jeu
+
 };
 
-struct ListeJeux{};  //TODO: Remplacer cette définition (qui est ici juste pour que le code fourni compile) pour que ListeJeux soit une Liste<Jeu> .

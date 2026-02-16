@@ -3,6 +3,8 @@
 #include <fstream>
 #include <cstdint>
 #include "cppitertools/range.hpp"
+#include "Liste.hpp"
+
 using namespace std;
 
 using UInt8  = uint8_t;
@@ -71,8 +73,9 @@ ListeJeux creerListeJeux(const string& nomFichier)
 	int nElements = lireUint16(f);
 	//TODO: Compléter la fonction.
 	ListeJeux listeJeux;
-	for ([[maybe_unused]] int i : iter::range(nElements))
-		lireJeu(f, listeJeux);
+	for ([[maybe_unused]] int i : iter::range(nElements)) {
+		listeJeux.ajouterElement(lireJeu(f, listeJeux));
+	}
 
-	return {};
+	return listeJeux;
 }
