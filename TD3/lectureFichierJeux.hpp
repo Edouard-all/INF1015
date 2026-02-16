@@ -3,6 +3,9 @@
 #include "Jeu.hpp"
 #include "Concepteur.hpp"
 #include <iostream>
+#include "Liste.hpp"
+
+using ListeJeux = Liste<Jeu>;
 
 Concepteur* chercherConcepteur(ListeJeux& listeJeux, const std::string& nom);
 Concepteur* lireConcepteur(ListeJeux& lj, std::istream& f);
