@@ -45,8 +45,10 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
 		// fonction.
-		for (shared_ptr<Concepteur> d : j->ListeConcepteurs.spanneListe()) {
-			if (d->nom == nom)
+		ListeConcepteur listeConcepteurs = j->getListeConcepteur();
+		for (shared_ptr<Concepteur> d : listeConcepteurs.spanneListe()) {
+			string nomD = d->getNom();
+			if (nomD == nom)
 				return d;
 		}
 	}
@@ -54,7 +56,7 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 	return {};
 }
 
-Concepteur* lireConcepteur(ListeJeux& lj, istream& f)
+shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, istream& f)
 {
 	string nom              = lireString(f);
 	unsigned anneeNaissance = lireUint16(f);
@@ -65,7 +67,7 @@ Concepteur* lireConcepteur(ListeJeux& lj, istream& f)
 	return {};
 }
 
-Jeu* lireJeu(istream& f, ListeJeux& lj)
+shared_ptr<Jeu> lireJeu(istream& f, ListeJeux& lj)
 {
 	string titre          = lireString(f);
 	unsigned anneeSortie  = lireUint16(f);

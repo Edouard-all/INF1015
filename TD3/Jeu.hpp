@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include <string>
+#include "Liste.hpp"
+#include "Concepteur.hpp"
+
 using ListeConcepteur = Liste<Concepteur>;
 class Jeu
 {
@@ -26,6 +29,7 @@ public:
 	void setDeveloppeur(std::string developpeur) { developpeur_ = move(developpeur); }
 
 	//TODO: Pouvoir accéder à la liste de concepteurs.
+	const ListeConcepteur& getListeConcepteur() const { return listeConcepteur_; }
 
 	//TODO: Votre méthode pour trouver un concepteur selon un critère donné par une lambda, en utilisant la méthode de Liste.
 

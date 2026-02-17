@@ -30,11 +30,10 @@ public:
 	Liste (Liste&& other) {
 		/*constructeur move*/
 	}
-	shared_ptr<T> operator[](uint8_t index) 
-		return elements_[index];
+	Liste operator= (const Liste<T>& other) { return other; }
+	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
 
-	span<shared_ptr<T>> spanneListe() const
-		return span(elements_, nElements_);
+	span<shared_ptr<T>> spanneListe() const { return span(elements_, nElements_); }
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
 	{
@@ -47,10 +46,10 @@ public:
 	unsigned getCapacite() const { return capacite_; }
 
 	//TODO: Méthode pour changer la capacité de la liste
-	void changerCapaciteListe(unsigned nouvelleCapacite)
+	void changerCapaciteListe(const unsigned nouvelleCapacite)
 	{
 		assert(nouvelleCapacite >= nElements_); // On ne demande pas de supporter les réductions de nombre d'éléments.
-		unique_ptr<shared_ptr<T>> nouvelleListe = make_unique<shared_ptr<T>[nouvelleCapacite]>;
+		unique_ptr<shared_ptr<T>[]> nouvelleListe = make_unique<shared_ptr<T>[nouvelleCapacite]>;
 		// Pas nécessaire de tester si liste.elements est nullptr puisque si c'est le cas, nElements est nécessairement 0.
 		for (int i : iter::range(nElements_))
 			nouvelleListe[i] = move(elements_[i]);
@@ -63,5 +62,5 @@ private:
 	unsigned nElements_;
 	unsigned capacite_;
 	//TODO: Attribut contenant les éléments de la liste.
-	unique_ptr<shared_ptr<T>> elements_;
+	unique_ptr<shared_ptr<T>[]> elements_;
 };
