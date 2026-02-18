@@ -33,7 +33,7 @@ public:
 	Liste operator= (const Liste<T>& other) { return other; }
 	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
 
-	span<shared_ptr<T>> spanneListe() const { return span(elements_, nElements_); }
+	//span<shared_ptr<T>> spanneListe() const { return span(elements_, nElements_); }
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
 	{
@@ -57,7 +57,14 @@ public:
 		capacite_ = nouvelleCapacite;
 	}
 	//TODO: Méthode pour trouver un élément selon un critère (lambda).
-
+	shared_ptr<T> trouverElementSi(const function<bool(string)>& critere) const {
+		for (int i = 0; i < nElements_; i++) {
+			shared_ptr<T> element = elements_[i];
+			if (critere(element->getTitre()))
+				return element;
+		}
+		return nullptr;
+	}
 private:
 	unsigned nElements_;
 	unsigned capacite_;

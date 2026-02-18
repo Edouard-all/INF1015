@@ -41,7 +41,8 @@ string lireString(istream& fichier)
 shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& nom)
 {
 	//TODO: Compléter la fonction (équivalent de trouverDesigner du TD2).
-	for (const shared_ptr<Jeu> j : listeJeux.spanneListe()) {
+	// utiliser la methode trouverElement de liste pour trouver l'element avec un concepteur de nom utiliser la condition lambda pour cette fonction
+	for (const shared_ptr<Jeu> j : listeJeux.size()) {
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
 		// fonction.

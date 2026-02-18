@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <string>
-#include "Jeu.hpp"
 
 class Concepteur
 {
@@ -27,5 +26,4 @@ private:
 	std::string nom_;
 	int anneeNaissance_;
 	std::string pays_;
-	ListeJeux listeJeuxParticipe_;
 };
