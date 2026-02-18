@@ -15,13 +15,13 @@ public:
 	Liste() {
 		capacite_ = 0;
 		nElements_ = 0;
-		elements_ = make_unique<shared_ptr<T>>[0];
+		elements_ = make_unique<shared_ptr<T>[]>(0);
 	}
 
 	Liste(unsigned longueur) {
 		capacite_ = longueur;
 		nElements_ = 0;
-		elements_ = make_unique<shared_ptr<T>>[longueur];
+		elements_ = make_unique<shared_ptr<T>[]>(longueur);
 	}
 
 	Liste (const Liste& other) {
@@ -33,7 +33,6 @@ public:
 	Liste operator= (const Liste<T>& other) { return other; }
 	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
 
-	//span<shared_ptr<T>> spanneListe() const { return span(elements_, nElements_); }
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
 	{
@@ -49,7 +48,7 @@ public:
 	void changerCapaciteListe(const unsigned nouvelleCapacite)
 	{
 		assert(nouvelleCapacite >= nElements_); // On ne demande pas de supporter les réductions de nombre d'éléments.
-		unique_ptr<shared_ptr<T>[]> nouvelleListe = make_unique<shared_ptr<T>[nouvelleCapacite]>;
+		unique_ptr<shared_ptr<T>[]> nouvelleListe = make_unique<shared_ptr<T>[]>(nouvelleCapacite);
 		// Pas nécessaire de tester si liste.elements est nullptr puisque si c'est le cas, nElements est nécessairement 0.
 		for (int i : iter::range(nElements_))
 			nouvelleListe[i] = move(elements_[i]);
@@ -60,10 +59,21 @@ public:
 	shared_ptr<T> trouverElementSi(const function<bool(string)>& critere) const {
 		for (int i = 0; i < nElements_; i++) {
 			shared_ptr<T> element = elements_[i];
-			if (critere(element->getTitre()))
+			if (critere(element->getNom()))
 				return element;
 		}
 		return nullptr;
+	}
+	void afficherListe()
+	{
+		static const string ligneSeparation = "\n\033[95m"
+			"══════════════════════════════════════════════════════════════════════════"
+			"\033[0m\n";
+		cout << ligneSeparation << endl;
+		for (uint8_t i = 0; i < nElements_; i++) {
+			elements_[i].afficher();
+			cout << ligneSeparation << endl;
+		}
 	}
 private:
 	unsigned nElements_;

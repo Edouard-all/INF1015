@@ -27,12 +27,21 @@ public:
 	void setAnneeSortie(unsigned annee)     { anneeSortie_ = annee; }
 	const std::string& getDeveloppeur() const { return developpeur_; }
 	void setDeveloppeur(std::string developpeur) { developpeur_ = move(developpeur); }
-
+	
 	//TODO: Pouvoir accéder à la liste de concepteurs.
 	const ListeConcepteur& getListeConcepteur() const { return listeConcepteur_; }
-
+	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); }
 	//TODO: Votre méthode pour trouver un concepteur selon un critère donné par une lambda, en utilisant la méthode de Liste.
+	shared_ptr<Concepteur> trouverConcepteur(string nom) const { listeConcepteur_.trouverElementSi([=](string nom2)->bool {if (nom == nom2) return true; else return false; }); }
+	void afficher() {
+		cout << "Titre : " << "\033[94m" << titre_ << "\033[0m" << endl;
+		cout << "Parution : " << "\033[94m" << anneeSortie_ << "\033[0m"
+			<< endl;
+		cout << "Développeur :  " << "\033[94m" << developpeur_ << "\033[0m"
+			<< endl;
+		cout << "Concepteurs du jeu :" << "\033[94m" << endl;
 
+	}
 private:
 	std::string titre_;
 	unsigned anneeSortie_;

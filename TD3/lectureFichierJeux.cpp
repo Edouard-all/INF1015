@@ -42,19 +42,14 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 {
 	//TODO: Compléter la fonction (équivalent de trouverDesigner du TD2).
 	// utiliser la methode trouverElement de liste pour trouver l'element avec un concepteur de nom utiliser la condition lambda pour cette fonction
-	for (const shared_ptr<Jeu> j : listeJeux.size()) {
+	for (uint8_t i = 0; i < listeJeux.size(); i++) {
+		shared_ptr<Jeu> jeu = listeJeux[i];
+		ListeConcepteur listeConcepteur = jeu->getListeConcepteur();
+		return listeConcepteur.trouverElementSi([=](string titre)->bool {if (titre == nom) return true; else return false; });
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
 		// fonction.
-		ListeConcepteur listeConcepteurs = j->getListeConcepteur();
-		for (shared_ptr<Concepteur> d : listeConcepteurs.spanneListe()) {
-			string nomD = d->getNom();
-			if (nomD == nom)
-				return d;
-		}
 	}
-	return nullptr;
-	return {};
 }
 
 shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, istream& f)
@@ -79,8 +74,11 @@ shared_ptr<Jeu> lireJeu(istream& f, ListeJeux& lj)
 	string developpeur    = lireString(f);
 	unsigned nConcepteurs = lireUint8(f);
 	//TODO: Compléter la fonction (équivalent de lireJeu du TD2).
-	for (unsigned int i = 0; i < nConcepteurs; i++)
-		lireConcepteur(lj, f);
+	shared_ptr<Jeu> ptrJeu = make_shared<Jeu>(titre,anneeSortie,developpeur,nConcepteurs);
+	for (unsigned int i = 0; i < nConcepteurs; i++) {
+		shared_ptr<Concepteur> concepteur = lireConcepteur(lj, f);
+		ptrJeu->ajouterConcepteur(concepteur);
+	}
 
 	cout << "J: " << titre << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
 	return {};
