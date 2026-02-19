@@ -33,7 +33,7 @@ public:
 	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); }
 	//TODO: Votre méthode pour trouver un concepteur selon un critère donné par une lambda, en utilisant la méthode de Liste.
 	shared_ptr<Concepteur> trouverConcepteur(string nom) const { listeConcepteur_.trouverElementSi([=](string nom2)->bool {if (nom == nom2) return true; else return false; }); }
-	void afficher() {
+	void afficher() const {
 		cout << "Titre : " << "\033[94m" << titre_ << "\033[0m" << endl;
 		cout << "Parution : " << "\033[94m" << anneeSortie_ << "\033[0m"
 			<< endl;

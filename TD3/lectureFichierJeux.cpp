@@ -81,7 +81,7 @@ shared_ptr<Jeu> lireJeu(istream& f, ListeJeux& lj)
 	}
 
 	cout << "J: " << titre << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {};
+	return ptrJeu;
 }
 
 ListeJeux creerListeJeux(const string& nomFichier)
