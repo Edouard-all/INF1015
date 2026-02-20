@@ -27,7 +27,7 @@ public:
 	void setAnneeSortie(unsigned annee)     { anneeSortie_ = annee; }
 	const std::string& getDeveloppeur() const { return developpeur_; }
 	void setDeveloppeur(std::string developpeur) { developpeur_ = move(developpeur); }
-	
+
 	//TODO: Pouvoir accéder à la liste de concepteurs.
 	const ListeConcepteur& getListeConcepteur() const { return listeConcepteur_; }
 	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); }
@@ -39,7 +39,7 @@ public:
 			<< endl;
 		cout << "Développeur :  " << "\033[94m" << developpeur_ << "\033[0m"
 			<< endl;
-		cout << "Concepteurs du jeu :" << "\033[94m" << endl;
+		cout << "Concepteurs du jeu :" << listeConcepteur_<< "\033[94m" << endl;
 
 	}
 private:
@@ -51,3 +51,4 @@ private:
 };
 
   //TODO: Remplacer cette définition (qui est ici juste pour que le code fourni compile) pour que ListeJeux soit une Liste<Jeu> .
+ 

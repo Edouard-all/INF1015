@@ -7,6 +7,11 @@
 #include "bibliotheque_cours.hpp"
 #include "verification_allocation.hpp"
 using namespace std;
+ListeJeux::operator<<() {
+	for (int i = 0; i < ListeJeux.nElements_; i++) {
+
+	}
+}
 
 //TODO: Vos surcharges d'opérateur <<
 
@@ -25,6 +30,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 		"\033[0m\n";
 
 	//TODO: L'affichage de listeJeux et l'écriture dans le fichier devraient fonctionner.
+
 
 	//TODO: Compléter le main avec les tests demandés.
 	//TODO: S'assurer qu'aucune ligne de code est non couverte.

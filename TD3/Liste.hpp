@@ -24,14 +24,18 @@ public:
 		elements_ = make_unique<shared_ptr<T>[]>(longueur);
 	}
 
-	Liste (const Liste& other) {
+	Liste(const Liste& other) {
 		/*constructeur de copie*/
 	}
-	Liste (Liste&& other) {
+	Liste(Liste&& other) {
 		/*constructeur move*/
 	}
 	Liste operator= (const Liste<T>& other) { return other; }
 	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
+
+	friend void operator<<();
+
+	friend void operator>>();
 
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)

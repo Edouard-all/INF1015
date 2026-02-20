@@ -21,6 +21,11 @@ public:
 	void setAnneeNaissance(int annee)     { anneeNaissance_ = annee; }
 	const std::string& getPays() const    { return pays_; }
 	void setPays(std::string pays)        { pays_ = move(pays); }
+	
+	void afficherConcepteur() {
+		cout << "\t" << nom_ << ", " << anneeNaissance_ << ", " << pays_
+			<< endl;
+	}
 
 private:
 	std::string nom_;
