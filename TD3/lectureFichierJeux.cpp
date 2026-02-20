@@ -41,42 +41,47 @@ string lireString(istream& fichier)
 shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& nom)
 {
 	//TODO: Compléter la fonction (équivalent de trouverDesigner du TD2).
-	for (const shared_ptr<Jeu> j : listeJeux.spanneListe()) {
+	// utiliser la methode trouverElement de liste pour trouver l'element avec un concepteur de nom utiliser la condition lambda pour cette fonction
+	for (uint8_t i = 0; i < listeJeux.size(); i++) {
+		shared_ptr<Jeu> jeu = listeJeux[i];
+		ListeConcepteur listeConcepteur = jeu->getListeConcepteur();
+		return listeConcepteur.trouverElementSi([=](string titre)->bool {if (titre == nom) return true; else return false; });
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
 		// fonction.
-		for (shared_ptr<Concepteur> d : j->ListeConcepteurs.spanneListe()) {
-			if (d->nom == nom)
-				return d;
-		}
 	}
-	return nullptr;
-	return {};
 }
 
-Concepteur* lireConcepteur(ListeJeux& lj, istream& f)
+shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, istream& f)
 {
 	string nom              = lireString(f);
 	unsigned anneeNaissance = lireUint16(f);
 	string pays             = lireString(f);
-
+	Concepteur concepteur(nom,anneeNaissance,pays);
+	shared_ptr<Concepteur> concepteurExistant = chercherConcepteur(lj, nom);
+	if (concepteurExistant != nullptr)
+		return concepteurExistant;
 	//TODO: Compléter la fonction (équivalent de lireDesigner du TD2).
 	cout << "C: " << nom << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {};
+	shared_ptr<Concepteur> concepteurPtr = make_shared<Concepteur>(concepteur);
+	return concepteurPtr;
 }
 
-Jeu* lireJeu(istream& f, ListeJeux& lj)
+shared_ptr<Jeu> lireJeu(istream& f, ListeJeux& lj)
 {
 	string titre          = lireString(f);
 	unsigned anneeSortie  = lireUint16(f);
 	string developpeur    = lireString(f);
 	unsigned nConcepteurs = lireUint8(f);
 	//TODO: Compléter la fonction (équivalent de lireJeu du TD2).
-	for (unsigned int i = 0; i < nConcepteurs; i++)
-		lireConcepteur(lj, f);
+	shared_ptr<Jeu> ptrJeu = make_shared<Jeu>(titre,anneeSortie,developpeur,nConcepteurs);
+	for (unsigned int i = 0; i < nConcepteurs; i++) {
+		shared_ptr<Concepteur> concepteur = lireConcepteur(lj, f);
+		ptrJeu->ajouterConcepteur(concepteur);
+	}
 
 	cout << "J: " << titre << endl;  //TODO: Enlever cet affichage temporaire servant à voir que le code fourni lit bien les jeux.
-	return {};
+	return ptrJeu;
 }
 
 ListeJeux creerListeJeux(const string& nomFichier)

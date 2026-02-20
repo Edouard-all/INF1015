@@ -7,7 +7,7 @@
 
 using ListeJeux = Liste<Jeu>;
 
-Concepteur* chercherConcepteur(ListeJeux& listeJeux, const std::string& nom);
-Concepteur* lireConcepteur(ListeJeux& lj, std::istream& f);
-Jeu* lireJeu(std::istream& f, ListeJeux& lj);
+shared_ptr<Concepteur> chercherConcepteur(ListeJeux & listeJeux, const std::string & nom);
+shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, std::istream& f);
+shared_ptr<Jeu> lireJeu(std::istream& f, ListeJeux& lj);
 ListeJeux creerListeJeux(const std::string& nomFichier);
