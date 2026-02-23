@@ -24,14 +24,17 @@ public:
 		elements_ = make_unique<shared_ptr<T>[]>(longueur);
 	}
 
-	Liste (const Liste& other) {
+	Liste(const Liste& other) {
 		/*constructeur de copie*/
 	}
-	Liste (Liste&& other) {
+	Liste(Liste&& other) {
 		/*constructeur move*/
 	}
 	Liste operator= (const Liste<T>& other) { return other; }
-	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
+	shared_ptr<T> operator[](uint8_t index) const { return elements_[index]; }
+
+
+	
 
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
@@ -69,6 +72,7 @@ public:
 		static const string ligneSeparation = "\n\033[95m"
 			"══════════════════════════════════════════════════════════════════════════"
 			"\033[0m\n";
+
 		cout << ligneSeparation << endl;
 		for (uint8_t i = 0; i < nElements_; i++) {
 			elements_[i].afficher();
