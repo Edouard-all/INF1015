@@ -31,11 +31,10 @@ public:
 		/*constructeur move*/
 	}
 	Liste operator= (const Liste<T>& other) { return other; }
-	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
+	shared_ptr<T> operator[](uint8_t index) const { return elements_[index]; }
 
-	friend void operator<<();
 
-	friend void operator>>();
+	
 
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)

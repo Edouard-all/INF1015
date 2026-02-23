@@ -27,6 +27,8 @@ public:
 			<< endl;
 	}
 
+	
+
 private:
 	std::string nom_;
 	int anneeNaissance_;

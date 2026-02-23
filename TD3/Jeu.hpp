@@ -28,6 +28,7 @@ public:
 	const std::string& getDeveloppeur() const { return developpeur_; }
 	void setDeveloppeur(std::string developpeur) { developpeur_ = move(developpeur); }
 
+
 	//TODO: Pouvoir accéder à la liste de concepteurs.
 	const ListeConcepteur& getListeConcepteur() const { return listeConcepteur_; }
 	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); }
