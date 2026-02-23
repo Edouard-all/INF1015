@@ -25,13 +25,19 @@ public:
 	}
 
 	Liste(const Liste& other) {
-		/*constructeur de copie*/
+		nElements_ = other.size();
+		capacite_ = other.getCapacite();
+		elements_ = make_unique<shared_ptr<T>[]>(capacite_);
+		for (uint8_t i = 0; i < nElements_; i++) {
+			elements_[i] = other.elements_[i];
+		}
 	}
 	Liste(Liste&& other) {
 		/*constructeur move*/
 	}
 	Liste operator= (const Liste<T>& other) { return other; }
 	shared_ptr<T> operator[](uint8_t index) const { return elements_[index]; }
+	shared_ptr<T> operator[](uint8_t index) { return elements_[index]; }
 
 
 	
