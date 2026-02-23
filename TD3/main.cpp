@@ -75,6 +75,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 	copieJeu.afficher();
 	cout << &listeJeux[2]->getListeConcepteur()[0];
 	cout << &copieJeu.getListeConcepteur()[0];
+
+	string lire("Aliou");
 	
 	//TODO: S'assurer qu'aucune ligne de code est non couverte.
 	//NOTE: Il n'est pas nécessaire de couvrir les getters/setters simples fournis; il faut tester si vous en ajoutez ou les modifiez.

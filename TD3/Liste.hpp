@@ -72,6 +72,7 @@ public:
 		static const string ligneSeparation = "\n\033[95m"
 			"══════════════════════════════════════════════════════════════════════════"
 			"\033[0m\n";
+
 		cout << ligneSeparation << endl;
 		for (uint8_t i = 0; i < nElements_; i++) {
 			elements_[i].afficher();

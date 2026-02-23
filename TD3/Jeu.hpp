@@ -40,7 +40,7 @@ public:
 			<< endl;
 		cout << "Développeur :  " << "\033[94m" << developpeur_ << "\033[0m"
 			<< endl;
-		cout << "Concepteurs du jeu :" << listeConcepteur_<< "\033[94m" << endl;
+		cout << "Concepteurs du jeu :" << "\033[94m" << endl;
 
 	}
 private:

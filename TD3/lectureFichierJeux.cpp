@@ -13,6 +13,14 @@ using UInt16 = uint16_t;
 
 #pragma region "Fonctions de lecture de base"
 //TODO: Remplacer lireUint8 et lireUint16 par une seule fonction générique qui permet les deux, mais permettre uniquement des types qui sont is_trivially_copyable_v (un trait de type).
+template<typename T>
+requires is_trivially_copyable_v<T>
+T lire(istream& fichier) {
+	T valeur = 0;
+	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
+	return valeur;
+}
+
 UInt8 lireUint8(istream& fichier)
 {
 	UInt8 valeur = 0;
