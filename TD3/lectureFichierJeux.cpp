@@ -20,25 +20,25 @@ T lire(istream& fichier) {
 	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
 	return valeur;
 }
-
-UInt8 lireUint8(istream& fichier)
-{
-	UInt8 valeur = 0;
-	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
-	return valeur;
-}
-
-UInt16 lireUint16(istream& fichier)
-{
-	UInt16 valeur = 0;
-	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
-	return valeur;
-}
+  
+//UInt8 lireUint8(istream& fichier)
+//{
+//	UInt8 valeur = 0;
+//	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
+//	return valeur;
+//}
+//
+//UInt16 lireUint16(istream& fichier)
+//{
+//	UInt16 valeur = 0;
+//	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
+//	return valeur;
+//}
 
 string lireString(istream& fichier)
 {
 	string texte;
-	texte.resize(lireUint16(fichier));
+	texte.resize(lire<UInt16>(fichier));
 	fichier.read(reinterpret_cast<char*>(&texte[0]), streamsize(sizeof(texte[0])) * texte.length());
 	return texte;
 }
@@ -53,7 +53,7 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 	for (uint8_t i = 0; i < listeJeux.size(); i++) {
 		shared_ptr<Jeu> jeu = listeJeux[i];
 		ListeConcepteur listeConcepteur = jeu->getListeConcepteur();
-		return listeConcepteur.trouverElementSi([=](string titre)->bool {if (titre == nom) return true; else return false; });
+		return listeConcepteur.trouverElementSi([=](string titre)->bool {return titre == nom; });
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
 		// fonction.
@@ -63,7 +63,7 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, istream& f)
 {
 	string nom              = lireString(f);
-	unsigned anneeNaissance = lireUint16(f);
+	unsigned anneeNaissance = lire<UInt16>(f);
 	string pays             = lireString(f);
 	Concepteur concepteur(nom,anneeNaissance,pays);
 	shared_ptr<Concepteur> concepteurExistant = chercherConcepteur(lj, nom);
@@ -78,9 +78,9 @@ shared_ptr<Concepteur> lireConcepteur(ListeJeux& lj, istream& f)
 shared_ptr<Jeu> lireJeu(istream& f, ListeJeux& lj)
 {
 	string titre          = lireString(f);
-	unsigned anneeSortie  = lireUint16(f);
+	unsigned anneeSortie  = lire<UInt16>(f);
 	string developpeur    = lireString(f);
-	unsigned nConcepteurs = lireUint8(f);
+	unsigned nConcepteurs = lire<UInt8>(f);
 	//TODO: Compléter la fonction (équivalent de lireJeu du TD2).
 	shared_ptr<Jeu> ptrJeu = make_shared<Jeu>(titre,anneeSortie,developpeur,nConcepteurs);
 	for (unsigned int i = 0; i < nConcepteurs; i++) {
@@ -96,7 +96,7 @@ ListeJeux creerListeJeux(const string& nomFichier)
 {
 	ifstream f(nomFichier, ios::binary);
 	f.exceptions(ios::failbit);
-	int nElements = lireUint16(f);
+	int nElements = lire<UInt16>(f);
 	//TODO: Compléter la fonction.
 	ListeJeux listeJeux;
 	for ([[maybe_unused]] int i : iter::range(nElements)) {
