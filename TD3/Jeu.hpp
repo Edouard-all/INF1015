@@ -34,6 +34,7 @@ public:
 	void setConcepteur(uint8_t index, shared_ptr<Concepteur> concepteur) { listeConcepteur_[index] = concepteur; };
 
 
+
 	//TODO: Votre méthode pour trouver un concepteur selon un critère donné par une lambda, en utilisant la méthode de Liste.
 	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); };
 	shared_ptr<Concepteur> trouverConcepteur(string nom) const { listeConcepteur_.trouverElementSi([=](string nom2)->bool {if (nom == nom2) return true; else return false; }); }
