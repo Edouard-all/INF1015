@@ -15,33 +15,26 @@ public:
 	Liste() {
 		capacite_ = 0;
 		nElements_ = 0;
-		elements_ = make_unique<shared_ptr<T>[]>(0);
+		elements_ = make_unique<shared_ptr<T>>[0];
 	}
 
 	Liste(unsigned longueur) {
 		capacite_ = longueur;
 		nElements_ = 0;
-		elements_ = make_unique<shared_ptr<T>[]>(longueur);
+		elements_ = make_unique<shared_ptr<T>>[longueur];
 	}
 
-	Liste(const Liste& other) {
-		nElements_ = other.size();
-		capacite_ = other.getCapacite();
-		elements_ = make_unique<shared_ptr<T>[]>(capacite_);
-		for (uint8_t i = 0; i < nElements_; i++) {
-			elements_[i] = other.elements_[i];
-		}
+	Liste (const Liste& other) {
+		/*constructeur de copie*/
 	}
-	Liste(Liste&& other) {
+	Liste (Liste&& other) {
 		/*constructeur move*/
 	}
-	Liste operator= (const Liste<T>& other) { return other; }
-	shared_ptr<T>& operator[](uint8_t index) const { return elements_[index]; }
-	shared_ptr<T>& operator[](uint8_t index) { return elements_[index]; }
+	shared_ptr<T> operator[](uint8_t index) 
+		return elements_[index];
 
-
-	
-
+	span<shared_ptr<T>> spanneListe() const
+		return span(elements_, nElements_);
 	//TODO: Méthode pour ajouter un élément à la liste
 	void ajouterElement(shared_ptr<T> element)
 	{
@@ -54,10 +47,10 @@ public:
 	unsigned getCapacite() const { return capacite_; }
 
 	//TODO: Méthode pour changer la capacité de la liste
-	void changerCapaciteListe(const unsigned nouvelleCapacite)
+	void changerCapaciteListe(unsigned nouvelleCapacite)
 	{
 		assert(nouvelleCapacite >= nElements_); // On ne demande pas de supporter les réductions de nombre d'éléments.
-		unique_ptr<shared_ptr<T>[]> nouvelleListe = make_unique<shared_ptr<T>[]>(nouvelleCapacite);
+		unique_ptr<shared_ptr<T>> nouvelleListe = make_unique<shared_ptr<T>[nouvelleCapacite]>;
 		// Pas nécessaire de tester si liste.elements est nullptr puisque si c'est le cas, nElements est nécessairement 0.
 		for (int i : iter::range(nElements_))
 			nouvelleListe[i] = move(elements_[i]);
@@ -89,5 +82,5 @@ private:
 	unsigned nElements_;
 	unsigned capacite_;
 	//TODO: Attribut contenant les éléments de la liste.
-	unique_ptr<shared_ptr<T>[]> elements_;
+	unique_ptr<shared_ptr<T>> elements_;
 };
