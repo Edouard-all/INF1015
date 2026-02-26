@@ -3,7 +3,7 @@
 #include "Liste.hpp"
 #include "Concepteur.hpp"
 
-using ListeConcepteur = Liste<Concepteur>;
+using ListeConcepteurs = Liste<Concepteur>;
 class Jeu
 {
 public:
@@ -12,13 +12,13 @@ public:
 		titre_ = "";
 		anneeSortie_ = 0;
 		developpeur_ = "";
-		listeConcepteur_ = ListeConcepteur();
+		listeConcepteurs_ = ListeConcepteurs();
 	}
 	Jeu(string titre, unsigned anneeSortie, string developpeur, unsigned capacite) {
 		titre_ = titre;
 		anneeSortie_ = anneeSortie;
 		developpeur_ = developpeur;
-		listeConcepteur_ = ListeConcepteur(capacite);
+		listeConcepteurs_ = ListeConcepteurs(capacite);
 	}
 
 	const std::string& getTitre() const { return titre_; }
@@ -30,14 +30,14 @@ public:
 
 
 	//TODO: Pouvoir accéder à la liste de concepteurs.
-	const ListeConcepteur& getListeConcepteur() const { return listeConcepteur_; }
-	void setConcepteur(uint8_t index, shared_ptr<Concepteur> concepteur) { listeConcepteur_[index] = concepteur; };
+	const ListeConcepteurs& getListeConcepteur() const { return listeConcepteurs_; }
+	void setConcepteur(uint8_t index, shared_ptr<Concepteur> concepteur) { listeConcepteurs_[index] = concepteur; };
 
 
 
 	//TODO: Votre méthode pour trouver un concepteur selon un critère donné par une lambda, en utilisant la méthode de Liste.
-	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteur_.ajouterElement(concepteur); };
-	shared_ptr<Concepteur> trouverConcepteur(string nom) const { listeConcepteur_.trouverElementSi([=](string nom2)->bool {if (nom == nom2) return true; else return false; }); }
+	void ajouterConcepteur(shared_ptr<Concepteur> concepteur) { listeConcepteurs_.ajouterElement(concepteur); };
+	shared_ptr<Concepteur> trouverConcepteur(string nom) const { listeConcepteurs_.trouverElementSi([=](string nom2)->bool {if (nom == nom2) return true; else return false; }); }
 	void afficher() const {
 		cout << "Titre : " << "\033[94m" << titre_ << "\033[0m" << endl;
 		cout << "Parution : " << "\033[94m" << anneeSortie_ << "\033[0m"
@@ -53,7 +53,7 @@ private:
 	unsigned anneeSortie_;
 	std::string developpeur_;
 	//TODO: Attribut de la liste des concepteurs du jeu
-	ListeConcepteur listeConcepteur_;
+	ListeConcepteurs listeConcepteurs_;
 };
 
   //TODO: Remplacer cette définition (qui est ici juste pour que le code fourni compile) pour que ListeJeux soit une Liste<Jeu> .

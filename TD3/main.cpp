@@ -1,4 +1,11 @@
-﻿#include <iostream>
+﻿/**
+* Programme cree une liste de jeux et affiche les informations de chaques jeux
+* \file   main.cpp
+* \author Edourard Allaire et Aliou Banire Diallo
+* \date	  25 fevrier 2026
+* Créé le 13 fevrier 2026
+*/
+#include <iostream>
 #include <fstream>
 #include <ostream>
 #include "Liste.hpp"
@@ -25,7 +32,7 @@ ostream& operator<< (ostream& os, const Jeu& jeu) {
 		<< endl
 		<< "Concepteurs du jeu :" << "\033[94m";
 
-	const ListeConcepteur& liste = jeu.getListeConcepteur();
+	const ListeConcepteurs& liste = jeu.getListeConcepteur();
 	for (unsigned i = 0; i < liste.size(); i++) {
 		os << *liste[i];
 	}

@@ -1,4 +1,12 @@
-﻿// Fonctions pour lire le fichier binaire.
+﻿/**
+* Programme qui implemente les fonctions pour lire les informations d'une liste de jeux d'un fichier binaire
+* \file   lectureFichierJeux.cpp
+* \author Edourard Allaire et Aliou Banire Diallo
+* \date	  25 fevrier 2026
+* Créé le 13 fevrier 2026
+*/
+
+// Fonctions pour lire le fichier binaire.
 #include "lectureFichierJeux.hpp"
 #include <fstream>
 #include <cstdint>
@@ -13,27 +21,6 @@ using UInt16 = uint16_t;
 
 #pragma region "Fonctions de lecture de base"
 //TODO: Remplacer lireUint8 et lireUint16 par une seule fonction générique qui permet les deux, mais permettre uniquement des types qui sont is_trivially_copyable_v (un trait de type).
-//template<typename T>
-//requires is_trivially_copyable_v<T>
-//T lire(istream& fichier) {
-//	T valeur = 0;
-//	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
-//	return valeur;
-//}
-  
-//UInt8 lireUint8(istream& fichier)
-//{
-//	UInt8 valeur = 0;
-//	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
-//	return valeur;
-//}
-//
-//UInt16 lireUint16(istream& fichier)
-//{
-//	UInt16 valeur = 0;
-//	fichier.read(reinterpret_cast<char*>(&valeur), sizeof(valeur));
-//	return valeur;
-//}
 
 string lireString(istream& fichier)
 {
@@ -52,7 +39,7 @@ shared_ptr<Concepteur> chercherConcepteur(ListeJeux& listeJeux, const string& no
 	// utiliser la methode trouverElement de liste pour trouver l'element avec un concepteur de nom utiliser la condition lambda pour cette fonction
 	for (uint8_t i = 0; i < listeJeux.size(); i++) {
 		shared_ptr<Jeu> jeu = listeJeux[i];
-		ListeConcepteur listeConcepteur = jeu->getListeConcepteur();
+		ListeConcepteurs listeConcepteur = jeu->getListeConcepteur();
 		return listeConcepteur.trouverElementSi([=](string titre)->bool {return titre == nom; });
 		// Normalement on voudrait retourner un pointeur const, mais cela nous
 		// empêcherait d'affecter le pointeur retourné lors de l'appel de cette
