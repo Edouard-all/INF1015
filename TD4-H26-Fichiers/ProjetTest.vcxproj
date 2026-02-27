@@ -162,6 +162,7 @@
     <ClCompile Include="bibliotheque_cours\bibliotheque_cours.cpp" />
     <ClCompile Include="bibliotheque_cours\verification_allocation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Personnage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -171,6 +172,7 @@
     <None Include="..\doc\Vcpkg.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Affichable.hpp" />
     <ClInclude Include="Personnage.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

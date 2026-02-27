@@ -1,14 +1,16 @@
-#include <Affichable.hpp>
+#include "Affichable.hpp"
+#include <string>
 
+using namespace std;
 
-class Pernonnage : public Affichable {
+class Personnage : public Affichable {
 public:
 	Personnage();
 	Personnage(string nom, string jeu);
 	void afficher() override;
-	void setNom();
+	void setNom(string nom);
 	string getNom();
-	void setJeu();
+	void setJeu(string jeu);
 	string getJeu();
 private:
 	string nom_;
