@@ -17,6 +17,6 @@ void Hero::afficher() {
 		cout << allie << endl;
 }
 
-vector<string> Hero::getListeAllies() { return listeAllies_; }
+//vector<string> Hero::getListeAllies() { return listeAllies_; }
 
-string Hero::getEnnemie() { return ennemie_; }
+//string Hero::getEnnemie() { return ennemie_; }

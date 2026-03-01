@@ -164,6 +164,7 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Personnage.cpp" />
+    <ClCompile Include="VilainHero.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Affichable.hpp" />
     <ClInclude Include="Hero.hpp" />
     <ClInclude Include="Personnage.hpp" />
+    <ClInclude Include="VilainHero.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
