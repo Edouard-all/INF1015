@@ -13,7 +13,9 @@ ListeDeveloppeurs::ListeDeveloppeurs(unsigned nElements, unsigned capacite, Deve
 }
 
 void ListeDeveloppeurs::afficher() {
-	
+	for (int i : iter::range(this.nElements)){
+		
+	}
 }
 void ListeDeveloppeurs::ajouterDeveloppeur() {
 
