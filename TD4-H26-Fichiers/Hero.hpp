@@ -8,6 +8,7 @@ public:
 	void afficher() override;
 	//vector<string> getListeAllies();
 	//string getEnnemie();
+	void setEnnemie(string ennemie);
 private:
 	vector<string> listeAllies_;
 	string ennemie_;
