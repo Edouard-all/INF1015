@@ -20,6 +20,5 @@ void Hero::afficher() {
 void Hero::setEnnemie(string ennemie){
 	ennemie_ = ennemie;
 }
-//vector<string> Hero::getListeAllies() { return listeAllies_; }
-
-//string Hero::getEnnemie() { return ennemie_; }
+vector<string> Hero::getListeAllies() { return listeAllies_; }
+string Hero::getEnnemie() { return ennemie_; }
