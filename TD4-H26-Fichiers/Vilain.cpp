@@ -11,3 +11,6 @@ Vilain::Vilain(string objectif ){
 void Vilain::afficher() {
     cout << objectif_ << endl;
 }
+string Vilain::getObjectif() {
+    return objectif_;
+}
