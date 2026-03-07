@@ -1,5 +1,11 @@
 ﻿#include <fstream>
 #include "bibliotheque_cours.hpp"
+#include <vector>
+#include <Personnage.hpp>
+#include <Vilain.hpp>
+#include <Hero.hpp>
+#include <Vilain.hpp>
+#include <VilainHero.hpp>
 using namespace std;
 
 using UInt8  = uint8_t;
@@ -64,5 +70,31 @@ int main()
 	fichierVilains.exceptions(ios::failbit);
 
 	//TODO: Votre code pour le main commence ici
-	
+	vector<Vilain> vilains;
+	vector<Hero> heros;
+	vector<Personnage> persannages;
+	uint16_t nHero = lireUint16(fichierHeros);
+	uint16_t nVilain = lireUint16(fichierVilains);
+	uint8_t nAllie = 0;
+
+	for (int i = 0; i < nHero; i++){
+		Hero hero = Hero();
+		hero.setNom(lireString(fichierHeros));
+		hero.setJeu(lireString(fichierHeros));
+		hero.setEnnemie(lireString(fichierHeros));
+		nAllie = lireUint8(fichierHeros);
+		for (int j = 0; j < nAllie; j++){
+			hero.getListeAllies().push_back(lireString(fichierHeros));
+		}
+		heros.push_back(hero);
+
+	}
+
+	for (int i = 0; i < nVilain; j++){
+		Vilain vilain = Vilain();
+		vilain.setNom(lireString(fichierVilains));
+		vilain.setJeu(lireString(fichierVilains));
+		vilain.setObjectif(lireString(fichierVilains));
+		vilains.push_back(vilain);
+	}
 }
