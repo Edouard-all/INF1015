@@ -97,4 +97,15 @@ int main()
 		vilain.setObjectif(lireString(fichierVilains));
 		vilains.push_back(vilain);
 	}
+	//Est-ce que ça respecte le principe DRY
+
+	for (const Hero& hero : heros){
+		hero.afficher();
+		cout << trait << endl;
+	}
+	for (const Vilain% vilain : vilains){
+		vilain.afficher();
+		cout << trait << endl;
+	}
+
 }
