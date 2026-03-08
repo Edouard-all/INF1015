@@ -72,8 +72,9 @@ int main()
 	//TODO: Votre code pour le main commence ici
 	vector<Vilain> vilains;
 	vector<Hero> heros;
-	vector<Personnage> persannages;
+	vector<Personnage> personnages;
 	Personnage copieHero = Personnage();
+	VilainHero vilainHero;
 	uint16_t nHero = lireUint16(fichierHeros);
 	uint16_t nVilain = lireUint16(fichierVilains);
 	uint8_t nAllie = 0;
@@ -103,12 +104,12 @@ int main()
 
 	for (const Hero& hero : heros){
 		hero.afficher();
-		Personnages.push_back(hero);
+		personnages.push_back(hero);
 		cout << trait << endl;
 	}
 	for (const Vilain& vilain : vilains){
 		vilain.afficher();
-		Personnages.push_back(vilain);
+		personnages.push_back(vilain);
 		cout << trait << endl;
 	}
 	// copie hero dans personnage
@@ -118,6 +119,15 @@ int main()
 		personnage.afficher();
 		cout << trait << endl;
 	}
-	
+
+	if (heros[0].getEnnemie() == vilains[0].getNom()){
+		int i = 0 ;
+		while(heros[0].getEnnemie() == vilains[i].getNom()){
+			i++;
+		}
+	}
+	vilainHero = VilainHero(vilains[i],heros[0]);
+	vilainHero.changerCouleur(3);
+	personnages.push_back(vilainHero);
 
 }
