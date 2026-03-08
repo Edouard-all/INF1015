@@ -100,12 +100,15 @@ int main()
 	//Est-ce que ça respecte le principe DRY
 
 	for (const Hero& hero : heros){
+		vilain.changerCouleur(1);
 		hero.afficher();
 		cout << trait << endl;
 	}
 	for (const Vilain% vilain : vilains){
+		vilain.changerCouleur(2);
 		vilain.afficher();
 		cout << trait << endl;
 	}
+
 
 }
