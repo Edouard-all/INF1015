@@ -9,6 +9,7 @@ Vilain::Vilain(string objectif ){
 }
 
 void Vilain::afficher() {
+    changerCouleur(2);
     cout << objectif_ << endl;
 }
 

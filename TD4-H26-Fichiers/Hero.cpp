@@ -11,6 +11,7 @@ Hero::Hero(vector<string> listeAllies, string ennemie) {
 }
 
 void Hero::afficher() {
+	changerCouleur(1);
 	cout << "Ennemies : " << ennemie_ << endl;
 	cout << "Alli�s :" << endl;
 	for (string allie : listeAllies_)

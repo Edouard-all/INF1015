@@ -102,18 +102,22 @@ int main()
 	//Est-ce que ça respecte le principe DRY
 
 	for (const Hero& hero : heros){
-		hero.changerCouleur(1);
 		hero.afficher();
 		Personnages.push_back(hero);
 		cout << trait << endl;
 	}
-	for (const Vilain% vilain : vilains){
-		vilain.changerCouleur(2);
+	for (const Vilain& vilain : vilains){
 		vilain.afficher();
 		Personnages.push_back(vilain);
 		cout << trait << endl;
 	}
 	// copie hero dans personnage
 	//copieHero = heros[0];
+
+	for (const Personnage& personnage: personnages){
+		personnage.afficher();
+		cout << trait << endl;
+	}
+	
 
 }
