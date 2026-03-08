@@ -73,9 +73,11 @@ int main()
 	vector<Vilain> vilains;
 	vector<Hero> heros;
 	vector<Personnage> persannages;
+	Personnage copieHero = Personnage();
 	uint16_t nHero = lireUint16(fichierHeros);
 	uint16_t nVilain = lireUint16(fichierVilains);
 	uint8_t nAllie = 0;
+
 
 	for (int i = 0; i < nHero; i++){
 		Hero hero = Hero();
@@ -100,15 +102,18 @@ int main()
 	//Est-ce que ça respecte le principe DRY
 
 	for (const Hero& hero : heros){
-		vilain.changerCouleur(1);
+		hero.changerCouleur(1);
 		hero.afficher();
+		Personnages.push_back(hero);
 		cout << trait << endl;
 	}
 	for (const Vilain% vilain : vilains){
 		vilain.changerCouleur(2);
 		vilain.afficher();
+		Personnages.push_back(vilain);
 		cout << trait << endl;
 	}
-
+	// copie hero dans personnage
+	//copieHero = heros[0];
 
 }
