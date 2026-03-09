@@ -1,4 +1,6 @@
 #include "Personnage.hpp"
+#pragma once
+
 
 class Vilain : virtual public Personnage {
 public:

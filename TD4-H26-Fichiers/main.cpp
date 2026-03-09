@@ -1,11 +1,7 @@
 ﻿#include <fstream>
 #include "bibliotheque_cours.hpp"
 #include <vector>
-#include <Personnage.hpp>
-#include <Vilain.hpp>
-#include <Hero.hpp>
-#include <Vilain.hpp>
-#include <VilainHero.hpp>
+#include "VilainHero.hpp"
 using namespace std;
 
 using UInt8  = uint8_t;
@@ -73,7 +69,7 @@ int main()
 	vector<Vilain> vilains;
 	vector<Hero> heros;
 	vector<Personnage> personnages;
-	Personnage copieHero = Personnage();
+	Personnage copieHero;
 	VilainHero vilainHero;
 	uint16_t nHero = lireUint16(fichierHeros);
 	uint16_t nVilain = lireUint16(fichierVilains);
@@ -93,7 +89,7 @@ int main()
 
 	}
 
-	for (int i = 0; i < nVilain; j++){
+	for (int j = 0; j < nVilain; j++){
 		Vilain vilain = Vilain();
 		vilain.setNom(lireString(fichierVilains));
 		vilain.setJeu(lireString(fichierVilains));
