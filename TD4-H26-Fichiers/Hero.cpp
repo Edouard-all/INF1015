@@ -9,16 +9,20 @@ Hero::Hero() {
 Hero::Hero(int couleur,string nom, string jeu, vector<string> listeAllies, string ennemie) :
 	Personnage(couleur,nom,jeu)
 {
+	//changerCouleur(bleu);
 	listeAllies_ = listeAllies;
 	ennemie_ = ennemie;
 }
 
 const void Hero::afficher() {
-	changerCouleur(1);
-	cout << "Ennemies : " << ennemie_ << endl;
+	Personnage::afficher();
+	cout << "\033[" << getCouleur() << "m" << "Ennemies : " << ennemie_ << endl;
 	cout << "Allies :" << endl;
 	for (string allie : listeAllies_)
 		cout << allie << endl;
+}
+void Hero::setListeAllies(vector<string> listeAllies) {
+	listeAllies_ = listeAllies;
 }
 
 void Hero::setEnnemie(string ennemie){

@@ -10,6 +10,10 @@ using namespace std;
 
 using UInt8  = uint8_t;
 using UInt16 = uint16_t;
+// Trait de separation
+static const string trait =
+"\033[92m═════════════════════════════════════════════════════════════════════════";
+
 
 UInt8 lireUint8(istream& fichier)
 {
@@ -49,7 +53,20 @@ T&& as_ref(T&& t) {
 	return std::forward<T>(t);
 }
 
+template<typename T>
+const void afficher(vector<T> listeItems) {
+	for (T item : listeItems) {
+		item.afficher();
+		cout << trait << endl;
+	}
+}
 
+//template<typename T>
+//void ajouterElement(vector<T> elements,vector<Personnage> listePersonnages) {
+//	for (T element : elements) {
+//		listePersonnages.push_back(element);
+//	}
+//}
 int main()
 {
 	#pragma region "Bibliothèque du cours"
@@ -59,10 +76,7 @@ int main()
 	bibliotheque_cours::activerCouleursAnsi();
 	#pragma endregion
 	
-	// Trait de separation
-	static const string trait =
-		"═════════════════════════════════════════════════════════════════════════";
-
+	
 	// Ouverture des fichiers binaires
 	ifstream fichierHeros("heros.bin", ios::binary);
 	ifstream fichierVilains("vilains.bin", ios::binary);
@@ -82,19 +96,23 @@ int main()
 
 	for (int i = 0; i < nHero; i++){
 		Hero hero = Hero();
+		hero.changerCouleur(bleu);
 		hero.setNom(lireString(fichierHeros));
 		hero.setJeu(lireString(fichierHeros));
 		hero.setEnnemie(lireString(fichierHeros));
 		nAllie = lireUint8(fichierHeros);
+		vector<string> listeAllies;
 		for (int j = 0; j < nAllie; j++){
-			hero.getListeAllies().push_back(lireString(fichierHeros));
+			listeAllies.push_back(lireString(fichierHeros));
 		}
+		hero.setListeAllies(listeAllies);
 		heros.push_back(hero);
 
 	}
 
 	for (int i = 0; i < nVilain; i++){
 		Vilain vilain = Vilain();
+		vilain.changerCouleur(rouge);
 		vilain.setNom(lireString(fichierVilains));
 		vilain.setJeu(lireString(fichierVilains));
 		vilain.setObjectif(lireString(fichierVilains));
@@ -102,7 +120,11 @@ int main()
 	}
 	//Est-ce que ça respecte le principe DRY
 
-	for (Hero hero : heros){
+	afficher(heros);
+	afficher(vilains);
+	//ajouterElement(heros, personnages);
+	//ajouterElement(vilains, personnages);
+	/*for (Hero hero : heros){
 		hero.afficher();
 		personnages.push_back(hero);
 		cout << trait << endl;
@@ -111,14 +133,15 @@ int main()
 		vilain.afficher();
 		personnages.push_back(vilain);
 		cout << trait << endl;
-	}
+	}*/
 	// copie hero dans personnage
 	//copieHero = heros[0];
 
-	for (Personnage personnage: personnages){
+	/*for (Personnage personnage: personnages){
 		personnage.afficher();
 		cout << trait << endl;
-	}
+	}*/
+	afficher(personnages);
 	int i = 0;
 	if (heros[0].getEnnemie() == vilains[0].getNom()){
 		while(heros[0].getEnnemie() == vilains[i].getNom()){
@@ -126,7 +149,8 @@ int main()
 		}
 	}
 	vilainHero = VilainHero(vilains[i],heros[0]);
-	vilainHero.changerCouleur(3);
+	vilainHero.changerCouleur(mauve);
 	personnages.push_back(vilainHero);
+	vilainHero.afficher();
 
 }
