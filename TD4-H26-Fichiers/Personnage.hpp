@@ -1,13 +1,15 @@
 #include "Affichable.hpp"
 #include <string>
+#pragma once
 
 using namespace std;
 
 class Personnage : public Affichable {
 public:
 	Personnage();
-	Personnage(string nom, string jeu);
-	void afficher() override;
+	Personnage(int couleur, string nom, string jeu);
+	const void afficher() override;
+	void changerCouleur(int couleur) override;
 	void setNom(string nom);
 	string getNom();
 	void setJeu(string jeu);
@@ -15,4 +17,5 @@ public:
 private:
 	string nom_;
 	string jeu_;
+	int couleur_ = 0;
 };

@@ -5,14 +5,19 @@ Personnage::Personnage() {
 	jeu_ = "";
 }
 
-Personnage::Personnage(string nom, string jeu) {
+Personnage::Personnage(int couleur,string nom, string jeu) {
+	couleur_ = couleur;
 	nom_ = nom;
 	jeu_ = jeu;
 }
 
-void Personnage::afficher() {
+const void Personnage::afficher() {
 	cout << "Nom: " << nom_ << endl;
 	cout << "Parution: " << jeu_ << endl;
+}
+
+void Personnage::changerCouleur(int couleur) {
+	couleur_ = couleur;
 }
 
 void Personnage::setNom(string nom) {

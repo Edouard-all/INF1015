@@ -1,11 +1,11 @@
 ﻿#include <fstream>
 #include "bibliotheque_cours.hpp"
 #include <vector>
-#include <Personnage.hpp>
-#include <Vilain.hpp>
-#include <Hero.hpp>
-#include <Vilain.hpp>
-#include <VilainHero.hpp>
+//#include "Personnage.hpp"
+//#include "Vilain.hpp"
+//#include "Hero.hpp"
+//#include "Vilain.hpp"
+#include "VilainHero.hpp"
 using namespace std;
 
 using UInt8  = uint8_t;
@@ -93,7 +93,7 @@ int main()
 
 	}
 
-	for (int i = 0; i < nVilain; j++){
+	for (int i = 0; i < nVilain; i++){
 		Vilain vilain = Vilain();
 		vilain.setNom(lireString(fichierVilains));
 		vilain.setJeu(lireString(fichierVilains));
@@ -102,12 +102,12 @@ int main()
 	}
 	//Est-ce que ça respecte le principe DRY
 
-	for (const Hero& hero : heros){
+	for (Hero hero : heros){
 		hero.afficher();
 		personnages.push_back(hero);
 		cout << trait << endl;
 	}
-	for (const Vilain& vilain : vilains){
+	for (Vilain vilain : vilains){
 		vilain.afficher();
 		personnages.push_back(vilain);
 		cout << trait << endl;
@@ -115,13 +115,12 @@ int main()
 	// copie hero dans personnage
 	//copieHero = heros[0];
 
-	for (const Personnage& personnage: personnages){
+	for (Personnage personnage: personnages){
 		personnage.afficher();
 		cout << trait << endl;
 	}
-
+	int i = 0;
 	if (heros[0].getEnnemie() == vilains[0].getNom()){
-		int i = 0 ;
 		while(heros[0].getEnnemie() == vilains[i].getNom()){
 			i++;
 		}
