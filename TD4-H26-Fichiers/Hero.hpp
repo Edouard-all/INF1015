@@ -1,5 +1,7 @@
 #include "Personnage.hpp"
 #include <vector>
+#pragma once
+
 
 class Hero : virtual public Personnage {
 public:

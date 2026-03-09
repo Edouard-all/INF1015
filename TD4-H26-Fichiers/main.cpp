@@ -87,7 +87,7 @@ int main()
 	vector<Vilain> vilains;
 	vector<Hero> heros;
 	vector<Personnage> personnages;
-	Personnage copieHero = Personnage();
+	Personnage copieHero;
 	VilainHero vilainHero;
 	uint16_t nHero = lireUint16(fichierHeros);
 	uint16_t nVilain = lireUint16(fichierVilains);
