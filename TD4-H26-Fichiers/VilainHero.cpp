@@ -8,6 +8,6 @@ VilainHero::VilainHero(Vilain& vilain, Hero& hero) {
 	setJeu(hero.getJeu() + "-" + vilain.getJeu());
 	missionSpeciale_ = vilain.getObjectif() + " dans le monde de " + hero.getJeu();
 }
-void VilainHero::afficher() {
+const void VilainHero::afficher() {
 	cout << missionSpeciale_ << endl;
 }

@@ -4,11 +4,13 @@ Vilain::Vilain(){
     objectif_ = {};
 }
 
-Vilain::Vilain(string objectif ){
+Vilain::Vilain(int couleur, string nom, string jeu, string objectif ) :
+    Personnage(couleur, nom, jeu)
+{
     objectif_ = objectif;
 }
 
-void Vilain::afficher() {
+const void Vilain::afficher() {
     changerCouleur(2);
     cout << objectif_ << endl;
 }
