@@ -15,6 +15,8 @@ public:
 	string getNom();
 	void setJeu(string jeu);
 	string getJeu();
+protected:
+	Personnage(const Personnage& autre);
 private:
 	string nom_;
 	string jeu_;

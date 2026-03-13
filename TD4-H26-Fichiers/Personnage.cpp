@@ -11,6 +11,12 @@ Personnage::Personnage(int couleur,string nom, string jeu) {
 	jeu_ = jeu;
 }
 
+Personnage::Personnage(const Personnage& autre) {
+	couleur_ = autre.couleur_;
+	nom_ = autre.nom_;
+	jeu_ = autre.jeu_;
+}
+
 const void Personnage::afficher() {
 	cout << "\033[" << couleur_ << "m" << "Nom: " << nom_ << endl;
 	cout << "Parution: " << jeu_ << endl;

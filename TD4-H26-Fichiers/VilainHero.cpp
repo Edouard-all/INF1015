@@ -6,8 +6,8 @@ VilainHero::VilainHero() {
 VilainHero::VilainHero(Vilain& vilain, Hero& hero) : 
 	Personnage(mauve,hero.getNom() + "-" + vilain.getNom(), hero.getJeu() + "-" + vilain.getJeu())
 {
-	/*setNom(hero.getNom() + "-" + vilain.getNom());
-	setJeu(hero.getJeu() + "-" + vilain.getJeu());*/
+	setNom(hero.getNom() + "-" + vilain.getNom());
+	setJeu(hero.getJeu() + "-" + vilain.getJeu());
 	setEnnemie(hero.getEnnemie());
 	setObjectif(vilain.getObjectif());
 	vector<string> listeAllies = hero.getListeAllies();

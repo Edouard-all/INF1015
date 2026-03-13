@@ -61,12 +61,12 @@ const void afficher(vector<T> listeItems) {
 	}
 }
 
-//template<typename T>
-//void ajouterElement(vector<T> elements,vector<Personnage> listePersonnages) {
-//	for (T element : elements) {
-//		listePersonnages.push_back(element);
-//	}
-//}
+template<typename T>
+void ajouterElement(vector<T> elements,vector<Personnage*> listePersonnages) {
+	for (T element : elements) {
+		listePersonnages.push_back(&element);
+	}
+}
 int main()
 {
 	#pragma region "Bibliothèque du cours"
@@ -86,9 +86,9 @@ int main()
 	//TODO: Votre code pour le main commence ici
 	vector<Vilain> vilains;
 	vector<Hero> heros;
-	vector<Personnage> personnages;
+	vector<Personnage*> personnages;
 	Personnage copieHero;
-	VilainHero vilainHero;
+	//VilainHero vilainHero;
 	uint16_t nHero = lireUint16(fichierHeros);
 	uint16_t nVilain = lireUint16(fichierVilains);
 	uint8_t nAllie = 0;
@@ -122,8 +122,8 @@ int main()
 
 	afficher(heros);
 	afficher(vilains);
-	//ajouterElement(heros, personnages);
-	//ajouterElement(vilains, personnages);
+	ajouterElement<Hero>(heros, personnages);
+	ajouterElement<Vilain>(vilains, personnages);
 	/*for (Hero hero : heros){
 		hero.afficher();
 		personnages.push_back(hero);
@@ -148,9 +148,9 @@ int main()
 			i++;
 		}
 	}
-	vilainHero = VilainHero(vilains[i],heros[0]);
-	vilainHero.changerCouleur(mauve);
-	personnages.push_back(vilainHero);
+	VilainHero vilainHero{ vilains[i],heros[0] };
+	//vilainHero.changerCouleur(mauve);
+	personnages.push_back(move(&vilainHero));
 	vilainHero.afficher();
 
 }
