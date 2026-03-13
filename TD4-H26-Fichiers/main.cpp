@@ -152,5 +152,5 @@ int main()
 	//vilainHero.changerCouleur(mauve);
 	personnages.push_back(vilainHero);
 	afficher(personnages);
-
+	cout << "\033[00m";
 }
