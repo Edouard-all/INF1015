@@ -16,5 +16,7 @@ VilainHero::VilainHero(Vilain& vilain, Hero& hero) :
 }
 const void VilainHero::afficher() {
 	Personnage::afficher();
+	Vilain::afficher();
+	Hero::afficher();
 	cout <<"\033[" << getCouleur() << "m" << missionSpeciale_ << endl;
 }
