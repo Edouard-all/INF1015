@@ -11,9 +11,13 @@ Vilain::Vilain(int couleur, string nom, string jeu, string objectif ) :
     objectif_ = objectif;
 }
 
+const void Vilain::afficherObjectif() {
+    cout << "\033[" << getCouleur() << "m" << objectif_ << endl;
+}
+
 const void Vilain::afficher() {
     Personnage::afficher();
-    cout << "\033[" << getCouleur() << "m" << objectif_ << endl;
+    afficherObjectif();
 }
 
 void Vilain::setObjectif(string objectif){

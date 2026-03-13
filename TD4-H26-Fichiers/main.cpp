@@ -56,15 +56,15 @@ T&& as_ref(T&& t) {
 template<typename T>
 const void afficher(vector<T> listeItems) {
 	for (T item : listeItems) {
-		item.afficher();
+		item->afficher();
 		cout << trait << endl;
 	}
 }
 
 template<typename T>
-void ajouterElement(vector<T> elements,vector<Personnage*> listePersonnages) {
-	for (T element : elements) {
-		listePersonnages.push_back(&element);
+void ajouterElement(vector<shared_ptr<T>> elements,vector<shared_ptr<Personnage>> listePersonnages) {
+	for (shared_ptr<T> element : elements) {
+		listePersonnages.push_back(element);
 	}
 }
 int main()
@@ -84,9 +84,9 @@ int main()
 	fichierVilains.exceptions(ios::failbit);
 
 	//TODO: Votre code pour le main commence ici
-	vector<Vilain> vilains;
-	vector<Hero> heros;
-	vector<Personnage*> personnages;
+	vector<shared_ptr<Vilain>> vilains;
+	vector<shared_ptr<Hero>> heros;
+	vector<shared_ptr<Personnage>> personnages;
 	Personnage copieHero;
 	//VilainHero vilainHero;
 	uint16_t nHero = lireUint16(fichierHeros);
@@ -95,27 +95,27 @@ int main()
 
 
 	for (int i = 0; i < nHero; i++){
-		Hero hero = Hero();
-		hero.changerCouleur(bleu);
-		hero.setNom(lireString(fichierHeros));
-		hero.setJeu(lireString(fichierHeros));
-		hero.setEnnemie(lireString(fichierHeros));
+		shared_ptr<Hero> hero = make_shared<Hero>();
+		hero->changerCouleur(bleu);
+		hero->setNom(lireString(fichierHeros));
+		hero->setJeu(lireString(fichierHeros));
+		hero->setEnnemie(lireString(fichierHeros));
 		nAllie = lireUint8(fichierHeros);
 		vector<string> listeAllies;
 		for (int j = 0; j < nAllie; j++){
 			listeAllies.push_back(lireString(fichierHeros));
 		}
-		hero.setListeAllies(listeAllies);
+		hero->setListeAllies(listeAllies);
 		heros.push_back(hero);
 
 	}
 
 	for (int i = 0; i < nVilain; i++){
-		Vilain vilain = Vilain();
-		vilain.changerCouleur(rouge);
-		vilain.setNom(lireString(fichierVilains));
-		vilain.setJeu(lireString(fichierVilains));
-		vilain.setObjectif(lireString(fichierVilains));
+		shared_ptr<Vilain> vilain = make_shared<Vilain>();
+		vilain->changerCouleur(rouge);
+		vilain->setNom(lireString(fichierVilains));
+		vilain->setJeu(lireString(fichierVilains));
+		vilain->setObjectif(lireString(fichierVilains));
 		vilains.push_back(vilain);
 	}
 	//Est-ce que ça respecte le principe DRY
@@ -141,16 +141,16 @@ int main()
 		personnage.afficher();
 		cout << trait << endl;
 	}*/
-	afficher(personnages);
 	int i = 0;
-	if (heros[0].getEnnemie() == vilains[0].getNom()){
-		while(heros[0].getEnnemie() == vilains[i].getNom()){
+	if (heros[0]->getEnnemie() == vilains[0]->getNom()){
+		while(heros[0]->getEnnemie() == vilains[i]->getNom()){
 			i++;
 		}
 	}
-	VilainHero vilainHero{ vilains[i],heros[0] };
+	shared_ptr<VilainHero> vilainHero;
+	vilainHero = make_shared<VilainHero>( *vilains[i],*heros[0] );
 	//vilainHero.changerCouleur(mauve);
-	personnages.push_back(move(&vilainHero));
-	vilainHero.afficher();
+	personnages.push_back(vilainHero);
+	afficher(personnages);
 
 }
