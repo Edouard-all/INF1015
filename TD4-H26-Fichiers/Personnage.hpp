@@ -8,12 +8,15 @@ class Personnage : public Affichable {
 public:
 	Personnage();
 	Personnage(int couleur, string nom, string jeu);
-	const void afficher() override;
+	virtual const void afficher() override;
 	void changerCouleur(int couleur) override;
+	int getCouleur();
 	void setNom(string nom);
 	string getNom();
 	void setJeu(string jeu);
 	string getJeu();
+protected:
+	Personnage(const Personnage& autre);
 private:
 	string nom_;
 	string jeu_;
