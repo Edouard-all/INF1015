@@ -1,3 +1,10 @@
+/**
+* Programme qui implémente la classe Hero.
+* \file   Hero.cpp
+* \auteurs Aliou Diallo et Edouard Allaire
+* \date   16 mars 2026
+* Créé le 27 février 2026
+*/
 #include "Hero.hpp"
 #pragma once
 
@@ -9,7 +16,6 @@ Hero::Hero() {
 Hero::Hero(int couleur,string nom, string jeu, vector<string> listeAllies, string ennemie) :
 	Personnage(couleur,nom,jeu)
 {
-	//changerCouleur(bleu);
 	listeAllies_ = listeAllies;
 	ennemie_ = ennemie;
 }

@@ -1,3 +1,10 @@
+/**
+* Programme qui implémente la classe Personnage.
+* \file   Personnage.cpp
+* \auteurs Aliou Diallo et Edouard Allaire
+* \date   16 mars 2026
+* Créé le 27 février 2026
+*/
 #include "Personnage.hpp"
 
 Personnage::Personnage() {

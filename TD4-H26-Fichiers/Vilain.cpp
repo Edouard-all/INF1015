@@ -1,3 +1,10 @@
+/**
+* Programme qui implémente la classe Vilain.
+* \file   Vilain.cpp
+* \auteurs Aliou Diallo et Edouard Allaire
+* \date   16 mars 2026
+* Créé le 27 février 2026
+*/
 #include "Vilain.hpp"
 
 Vilain::Vilain(){
@@ -7,7 +14,6 @@ Vilain::Vilain(){
 Vilain::Vilain(int couleur, string nom, string jeu, string objectif ) :
     Personnage(couleur, nom, jeu)
 {
-    //changerCouleur(rouge);
     objectif_ = objectif;
 }
 

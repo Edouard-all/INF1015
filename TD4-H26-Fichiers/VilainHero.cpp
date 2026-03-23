@@ -1,3 +1,10 @@
+/**
+* Programme qui implémente la classe VilainHero.
+* \file   VilainHero.cpp
+* \auteurs Aliou Diallo et Edouard Allaire
+* \date   16 mars 2026
+* Créé le 27 février 2026
+*/
 #include "VilainHero.hpp"
 
 VilainHero::VilainHero() {
