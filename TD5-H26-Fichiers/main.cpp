@@ -8,6 +8,9 @@
 #include <functional>
 #include "cppitertools/range.hpp"
 #include "bibliotheque_cours.hpp"
+#include <queue>
+#include <map>
+
 using namespace std;
 using namespace iter;
 
@@ -104,9 +107,9 @@ int main()
 
 	cout << separateurSections << "Vilains:" << endl;
 	for (auto& v : vilains) {
-		cout << separateurElements;
+		std::cout << separateurElements;
 		v.changerCouleur(cout, 0);
-		v.afficher(cout);
+		v.afficher(std::cout);
 	}
 
 	for (auto& h : heros)
@@ -117,16 +120,17 @@ int main()
 
 	peronnages.push_back(make_unique<VilainHeros>(vilains[1], heros[2]));
 
-	cout << separateurSections << "Personnages:" << endl;
+	std::cout << separateurSections << "Personnages:" << endl;
 	for (auto& p : peronnages) {
-		cout << separateurElements;
-		p->changerCouleur(cout, 0);
-		p->afficher(cout);
+		
+		std::cout << separateurElements;
+		p->changerCouleur(std::cout, 0);
+		p->afficher(std::cout);
 	}
-	cout << separateurSections << "Un autre vilain heros (exemple de l'énoncé du TD):" << endl;
+	std::cout << separateurSections << "Un autre vilain heros (exemple de l'énoncé du TD):" << endl;
 	VilainHeros kefkaCrono(vilains[2], heros[0]);
-	kefkaCrono.changerCouleur(cout,1);
-	kefkaCrono.afficher(cout);
+	kefkaCrono.changerCouleur(std::cout,1);
+	kefkaCrono.afficher(std::cout);
 	#endif
 	//}
 
@@ -153,6 +157,12 @@ int main()
 	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
 	
 	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
+	multimap<string, Heros> listeHeros; 
+
+	for (Heros hero : heros){
+		listeHeros.insert({ hero.getNom(), hero });
+	}
+	listeHeros.find("Crono")->second.afficher(cout);
 
 	//TODO: Assurez-vous de n'avoir aucune ligne non couverte dans les classes pour la liste liée.  Il peut y avoir des lignes non couvertes dans les personnages...
 }
