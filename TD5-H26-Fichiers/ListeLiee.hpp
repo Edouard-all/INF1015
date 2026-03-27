@@ -10,12 +10,21 @@ public:
 	using iterator = Iterateur<T>;  // Définit un alias au type, pour que ListeLiee<T>::iterator corresponde au type de son itérateur.
 
 	//TODO: La construction par défaut doit créer une liste vide valide.
+	ListeLiee() {
+		/*tete_ = nullptr;
+		queue_ = nullptr;
+		taille_ = 0;*/
+	}
 	~ListeLiee()
 	{
 		//TODO: Enlever la tête à répétition jusqu'à ce qu'il ne reste aucun élément.
 		// Pour enlever la tête, 
 		// 1. La tête doit devenir le suivant de la tête actuelle.
 		// 2. Ne pas oublier de désallouer le noeud de l'ancienne tête (si pas fait automatiquement).
+		/*Noeud<T>* teteTemporaire;
+		teteTemporaire = tete_->apres_;
+		delete tete_;
+		tete_ = teteTemporaire;*/
 	}
 
 	bool estVide() const  { return taille_ == 0; }
