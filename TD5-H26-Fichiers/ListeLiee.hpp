@@ -39,7 +39,8 @@ public:
 		//TODO: Vous devez créer un nouveau noeud en mémoire.
 		//TODO: Si la liste était vide, ce nouveau noeud est la tête et la queue;
 		// autrement, ajustez la queue et pointeur(s) adjacent(s) en conséquence.
-		Noeud<T>* nouveauNoeud; new Noeud(item, queue_, nullptr);
+		Noeud<T>* nouveauNoeud = new Noeud<T>;
+
 		if (taille_) {
 			nouveauNoeud->donne_ = item;
 			nouveauNoeud->avant_ = queue_;
@@ -103,9 +104,9 @@ public:
 		//  la tête de liste qu'il faut ajuster.
 		//NOTE: On ne demande pas de supporter d'effacer le dernier élément (c'est similaire au cas pour enlever le premier).
 
-		if (tete_ = it.position_) {
+		if (tete_ == it.position_) {
 			it.position_->apres_->avant_ = nullptr;
-			Noeud<T>* suivant = it.postion_->apres;
+			Noeud<T>* suivant = it.position_->apres_;
 			delete it.position_;
 			it.position_ = nullptr;
 			taille_--;
@@ -114,8 +115,8 @@ public:
 		}
 		else {
 			it.position_->avant_->apres_ = it.position_->apres_;
-			it.position_->apres_->avant_ = it.position_->avant;
-			Noeud<T>* suivant = it.postion_->apres;
+			it.position_->apres_->avant_ = it.position_->avant_;
+			Noeud<T>* suivant = it.position_->apres_;
 			delete it.position_;
 			it.position_ = nullptr;
 			taille_--;
