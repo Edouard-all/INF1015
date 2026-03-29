@@ -103,6 +103,25 @@ public:
 		//  la tête de liste qu'il faut ajuster.
 		//NOTE: On ne demande pas de supporter d'effacer le dernier élément (c'est similaire au cas pour enlever le premier).
 
+		if (tete_ = it.position_) {
+			it.position_->apres_->avant_ = nullptr;
+			Noeud<T>* suivant = it.postion_->apres;
+			delete it.position_;
+			it.position_ = nullptr;
+			taille_--;
+			tete_ = suivant;
+			return iterator(suivant);
+		}
+		else {
+			it.position_->avant_->apres_ = it.position_->apres_;
+			it.position_->apres_->avant_ = it.position_->avant;
+			Noeud<T>* suivant = it.postion_->apres;
+			delete it.position_;
+			it.position_ = nullptr;
+			taille_--;
+			return iterator(suivant);
+		}
+
 	}
 
 private:
