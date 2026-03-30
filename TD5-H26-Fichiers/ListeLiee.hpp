@@ -21,17 +21,18 @@ public:
 		// Pour enlever la tête, 
 		// 1. La tête doit devenir le suivant de la tête actuelle.
 		// 2. Ne pas oublier de désallouer le noeud de l'ancienne tête (si pas fait automatiquement).
-		Noeud<T>* teteTemporaire;
-		teteTemporaire = tete_->apres_;
-		delete tete_;
-		tete_ = teteTemporaire;
+		while (!estVide()) {
+			erase(begin());
+		}
+
+
 	}
 
 	bool estVide() const  { return taille_ == 0; }
 	unsigned size() const { return taille_; }
 	//NOTE: to_address (C++20) permet que ce même code fonctionne que vous utilisiez des pointeurs bruts ou intelligents (ça prend le pointeur brut associé au pointeur intelligent, s'il est intelligent).
 	iterator begin()  { return {to_address(tete_)}; }
-	iterator end()    { return {to_address(queue_->suivant_)}; }
+	iterator end()    { return {to_address(queue_->apres_)}; }
 
 	// Ajoute à la fin de la liste.
 	void push_back(const T& item)
@@ -41,17 +42,18 @@ public:
 		// autrement, ajustez la queue et pointeur(s) adjacent(s) en conséquence.
 		Noeud<T>* nouveauNoeud = new Noeud<T>;
 
-		if (taille_) {
-			nouveauNoeud->donne_ = item;
-			nouveauNoeud->avant_ = queue_;
-			queue_ = nouveauNoeud;
-		}
-		else {
+		if (estVide()) {
 			nouveauNoeud->donne_ = item;
 			tete_ = nouveauNoeud;
 			queue_ = nouveauNoeud;
 		}
-
+		else {
+			nouveauNoeud->donne_ = item;
+			nouveauNoeud->avant_ = queue_;
+			queue_->apres_ = nouveauNoeud;
+			queue_ = nouveauNoeud;
+		}
+		taille_++;
 	}
 
 	// Insère avant la position de l'itérateur.

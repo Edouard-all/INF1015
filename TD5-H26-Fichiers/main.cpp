@@ -155,13 +155,13 @@ int main()
 	}
 	//TODO: Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
 	//TODO: Assurez-vous que la taille de la liste est correcte après l'ajout.
-	if (!listeLieHero.estVide()) {
+	if (listeLieHero.estVide()) {
 		listeLieHero.insert(trouverParNom(listeLieHero, "Aya Brea"), Heros("Aliou", "1015", "Edouard"));
 	}
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
 	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
 	trouver = false;
-	while (trouver) {
+	while (!trouver) {
 		if (iterateurListeHero.operator*().getNom() == "Mario") {
 			Iterateur<Heros> suivant = listeLieHero.erase(iterateurListeHero);
 			suivant.operator*().afficher(cout);
