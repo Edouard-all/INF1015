@@ -12,7 +12,7 @@ public:
 	//TODO: Constructeur(s).
 	Noeud() {}
 	Noeud(T donne, Noeud<T>* avant = nullptr, Noeud<T>* apres = nullptr) {
-		donne_ = donne;
+		donnee_ = donne;
 		precedent_ = avant;
 		suivant_ = apres;
 	}
@@ -20,5 +20,5 @@ private:
 	//TODO: Attributs d'un noeud.
 	Noeud<T>* precedent_ = nullptr;
 	Noeud<T>* suivant_ = nullptr;
-	T donne_;
+	T donnee_;
 };

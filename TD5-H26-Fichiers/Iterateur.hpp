@@ -30,7 +30,7 @@ public:
 	}
 	//TODO: Ajouter ce qu'il manque pour que les boucles sur intervalles fonctionnent sur une ListeLiee.
 	bool operator==(const Iterateur<T>& it) const {
-		return it.position_->donne_ == position_->donne_;
+		return it.position_ == position_;
 	};
 
 private:
