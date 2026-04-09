@@ -26,18 +26,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Personnage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hero.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VilainHero.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vilain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -51,19 +39,31 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Personnage.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Affichable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hero.hpp">
+    <ClInclude Include="Heros.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VilainHero.hpp">
+    <ClInclude Include="Personnage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vilain.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VilainHeros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lectureBinaire.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Iterateur.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListeLiee.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Noeud.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
