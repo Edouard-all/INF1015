@@ -23,6 +23,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Echec
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        vuePiece.h vuePiece.cpp
+        modelePiece.h modelePiece.cpp
+        vueCase.h vueCase.cpp
+
+
+
+        modelRoi.h modelRoi.cpp
+        modelDame.h modelDame.cpp
+        modelTour.h modelTour.cpp
+        vueEchiquier.h vueEchiquier.cpp
+        modelCase.h modelCase.cpp
+        modelEchiquer.h modelEchiquer.cpp
+
 
 
     )
