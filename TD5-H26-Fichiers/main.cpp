@@ -135,57 +135,57 @@ int main()
 	//}
 
 	//TODO: Transférez les héros du vecteur heros dans une ListeLiee.
-	ListeLiee<Heros> listeLieHero = ListeLiee<Heros>();
-	for (Heros hero : heros) {
-		listeLieHero.push_back(hero);
-	}
+	ListeLiee<Heros> listeLieeHeros;
+	for (uint8_t i = 0; i < size(heros); i++)
+		listeLieeHeros.push_back(heros[i]);
 	//TODO: Créez un itérateur sur la liste liée à la position du héros Alucard
 	// Servez-vous de la fonction trouverParNom définie plus haut
-	Iterateur<Heros> iterateurListeHero = trouverParNom(listeLieHero, "Alucard");
+	Iterateur<Heros> it(trouverParNom(listeLieeHeros, "Alucard"));
 	//TODO: Servez-vous de l'itérateur créé précédemment pour trouver l'héroine Aya Brea,
 	// en sachant qu'elle se trouve plus loin dans la liste.
-	bool trouver = false;
-	while (trouver) {
-		if (iterateurListeHero.operator*().getNom() == "Aya Brea") {
-			trouver = true;
-		}
-		else {
-			iterateurListeHero.avancer();
-		}
+	Heros  hero1 = *it;
+	while (hero1.getNom() != "Aya Brea") {
+		it.avancer();
+		hero1 = *it;
 	}
+	UInt8 tailleAvant = listeLieeHeros.size();
 	//TODO: Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
+	Heros heroBidon("Aliou", "Echec", "les blancs");
+	it = listeLieeHeros.insert(it, heroBidon);
 	//TODO: Assurez-vous que la taille de la liste est correcte après l'ajout.
-	if (listeLieHero.estVide()) {
-		listeLieHero.insert(trouverParNom(listeLieHero, "Aya Brea"), Heros("Aliou", "1015", "Edouard"));
-	}
+	UInt8 tailleApres = listeLieeHeros.size();
+	bool estEgal = tailleApres == ++tailleAvant;
+	cout << estEgal << endl;
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
-	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
-	trouver = false;
-	while (!trouver) {
-		if (iterateurListeHero.operator*().getNom() == "Mario") {
-			Iterateur<Heros> suivant = listeLieHero.erase(iterateurListeHero);
-			suivant.operator*().afficher(cout);
-			trouver = true;
-		}
-		else {
-			iterateurListeHero.reculer();
-		}
+	hero1 = *it;
+	while (hero1.getNom() != "Mario") {
+		it.reculer();
+		hero1 = *it;
 	}
-	//
+	tailleAvant = listeLieeHeros.size();
+	it = listeLieeHeros.erase(it);
+	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
+	tailleApres = listeLieeHeros.size();
+	estEgal = tailleApres == --tailleAvant;
+	cout << estEgal << endl;
 	//TODO: Effacez le premier élément de la liste.
-	Iterateur debutListe = listeLieHero.begin();
-	Iterateur<Heros> nouveauDebut = listeLieHero.erase(debutListe);
+	listeLieeHeros.erase(listeLieeHeros.begin());
 	//TODO: Affichez votre liste de héros en utilisant un itérateur. La liste débute
 	// avec le héros Randi et n'a pas Mario.
 	// Servez-vous des methodes begin et end de la liste...
-	for (unsigned i = 0; i < listeLieHero.size(); i++) {
-		nouveauDebut.operator*().afficher(cout);
-		nouveauDebut.avancer();
-	}
+	it = listeLieeHeros.begin();
+	do {
+		hero1 = *it;
+		hero1.afficher(cout);
+		it.avancer();
+	} while (it != listeLieeHeros.end());
 	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
-	/*for (Noeud<Heros> hero : listeLieHero) {
-
-	}*/
+	it = listeLieeHeros.begin();
+	for (UInt8 i = 0; i < listeLieeHeros.size(); i++) {
+		hero1 = *it;
+		hero1.afficher(cout);
+		it.avancer();
+	}
 	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
 	multimap<string, Heros> listeHeros; 
 

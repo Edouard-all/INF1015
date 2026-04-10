@@ -11,14 +11,14 @@ class Noeud
 public:
 	//TODO: Constructeur(s).
 	Noeud() {}
-	Noeud(T donne, Noeud<T>* avant, Noeud<T>* apres) {
-		donne_ = donne;
-		avant_ = avant;
-		apres_ = apres;
+	Noeud(T donne, Noeud<T>* avant = nullptr, Noeud<T>* apres = nullptr) {
+		donnee_ = donne;
+		precedent_ = avant;
+		suivant_ = apres;
 	}
 private:
 	//TODO: Attributs d'un noeud.
-	Noeud<T>* avant_ = nullptr;
-	Noeud<T>* apres_ = nullptr;
-	T donne_;
+	Noeud<T>* precedent_ = nullptr;
+	Noeud<T>* suivant_ = nullptr;
+	T donnee_;
 };
