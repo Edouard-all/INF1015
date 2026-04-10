@@ -26,7 +26,7 @@ public:
 	}
 	T& operator*()
 	{
-		return position_->donnee_;
+		return position_->donne_;
 	}
 	//TODO: Ajouter ce qu'il manque pour que les boucles sur intervalles fonctionnent sur une ListeLiee.
 	bool operator==(const Iterateur<T>& it) const {

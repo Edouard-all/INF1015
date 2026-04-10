@@ -34,7 +34,7 @@ public:
 	unsigned size() const { return taille_; }
 	//NOTE: to_address (C++20) permet que ce même code fonctionne que vous utilisiez des pointeurs bruts ou intelligents (ça prend le pointeur brut associé au pointeur intelligent, s'il est intelligent).
 	iterator begin()  { return {to_address(tete_)}; }
-	iterator end()    { return {to_address(queue_->suivant_)}; }
+	iterator end()    { return {to_address(queue_->apres_)}; }
 
 	// Ajoute à la fin de la liste.
 	void push_back(const T& item)
@@ -56,6 +56,20 @@ public:
 			taille_++;
 		}
 		// autrement, ajustez la queue et pointeur(s) adjacent(s) en conséquence.
+		Noeud<T>* nouveauNoeud = new Noeud<T>;
+
+		if (estVide()) {
+			nouveauNoeud->donne_ = item;
+			tete_ = nouveauNoeud;
+			queue_ = nouveauNoeud;
+		}
+		else {
+			nouveauNoeud->donne_ = item;
+			nouveauNoeud->avant_ = queue_;
+			queue_->apres_ = nouveauNoeud;
+			queue_ = nouveauNoeud;
+		}
+		taille_++;
 	}
 
 	// Insère avant la position de l'itérateur.
@@ -119,6 +133,26 @@ public:
 		//  donc en 2. il se peut qu'il n'y ait pas de précédent et alors c'est
 		//  la tête de liste qu'il faut ajuster.
 		//NOTE: On ne demande pas de supporter d'effacer le dernier élément (c'est similaire au cas pour enlever le premier).
+
+		if (tete_ == it.position_) {
+			it.position_->apres_->avant_ = nullptr;
+			Noeud<T>* suivant = it.position_->apres_;
+			delete it.position_;
+			it.position_ = nullptr;
+			taille_--;
+			tete_ = suivant;
+			return iterator(suivant);
+		}
+		else {
+			it.position_->avant_->apres_ = it.position_->apres_;
+			it.position_->apres_->avant_ = it.position_->avant_;
+			Noeud<T>* suivant = it.position_->apres_;
+			delete it.position_;
+			it.position_ = nullptr;
+			taille_--;
+			return iterator(suivant);
+		}
+
 	}
 
 private:
