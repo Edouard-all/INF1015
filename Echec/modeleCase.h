@@ -1,5 +1,5 @@
-#ifndef MODELCASE_H
-#define MODELCASE_H
+#ifndef MODELECASE_H
+#define MODELECASE_H
 
 #include <QObject>
 
@@ -12,4 +12,4 @@ public:
 signals:
 };
 
-#endif // MODELCASE_H
+#endif // MODELECASE_H
