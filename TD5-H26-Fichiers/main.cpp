@@ -78,13 +78,13 @@ Iterateur<T> trouverParNom(ListeLiee<T>& liste, const string& nom)
 
 int main()
 {
-	#pragma region "Bibliothèque du cours"
+#pragma region "Bibliothèque du cours"
 	// Permet sous Windows les "ANSI escape code" pour changer de couleur
 	// https://en.wikipedia.org/wiki/ANSI_escape_code ; les consoles Linux/Mac
 	// les supportent normalement par défaut.
 	bibliotheque_cours::activerCouleursAnsi();
-	#pragma endregion
-	
+#pragma endregion
+
 	// Trait de separation
 	static const string trait =
 		"═════════════════════════════════════════════════════════════════════════";
@@ -97,7 +97,7 @@ int main()
 	vector<Vilain> vilains = lireFichier<Vilain>("vilains.bin");
 	vector<unique_ptr<Personnage>> peronnages;  // Doit être des pointeurs pour le polymorphisme, l'énoncé ne force pas les unique_ptr.
 
-	#if 1 //TODO: Vous n'avez pas à conserver ces affichages pour le TD5, ils sont pour le solutionnaire du TD4:
+#if 1 //TODO: Vous n'avez pas à conserver ces affichages pour le TD5, ils sont pour le solutionnaire du TD4:
 	cout << separateurSections << "Heros:" << endl;
 	for (auto& h : heros) {
 		cout << separateurElements;
@@ -122,16 +122,16 @@ int main()
 
 	std::cout << separateurSections << "Personnages:" << endl;
 	for (auto& p : peronnages) {
-		
+
 		std::cout << separateurElements;
 		p->changerCouleur(std::cout, 0);
 		p->afficher(std::cout);
 	}
 	std::cout << separateurSections << "Un autre vilain heros (exemple de l'énoncé du TD):" << endl;
 	VilainHeros kefkaCrono(vilains[2], heros[0]);
-	kefkaCrono.changerCouleur(std::cout,1);
+	kefkaCrono.changerCouleur(std::cout, 1);
 	kefkaCrono.afficher(std::cout);
-	#endif
+#endif
 	//}
 
 	//TODO: Transférez les héros du vecteur heros dans une ListeLiee.
