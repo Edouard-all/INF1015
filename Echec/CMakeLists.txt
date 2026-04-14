@@ -29,12 +29,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
 
 
-        modelRoi.h modelRoi.cpp
-        modelDame.h modelDame.cpp
-        modelTour.h modelTour.cpp
+
+        modeleDame.h modeleDame.cpp
+        modeleTour.h modeleTour.cpp
         vueEchiquier.h vueEchiquier.cpp
         modelCase.h modelCase.cpp
         modelEchiquier.h modelEchiquier.cpp
+        modeleCase.h modeleCase.cpp
+        modeleEchiquer.h modeleEchiquer.cpp
+        modeleRoi.h modeleRoi.cpp
+
 
 
 

@@ -10,6 +10,7 @@ public:
     explicit VuePiece(QWidget *parent = nullptr);
 
 signals:
+    void pieceDeplace();
 };
 
 #endif // VUEPIECE_H
