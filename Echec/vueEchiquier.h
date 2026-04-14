@@ -14,7 +14,7 @@ public:
 private:
     QGraphicsScene* scene;
     int tailleBordure = 8;
-    int tailleCarre = 50;
+    int tailleCarre = 100;
 
 signals:
 };
