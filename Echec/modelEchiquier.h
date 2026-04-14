@@ -15,11 +15,12 @@ class ModelEchiquier : public QObject
 public:
     explicit ModelEchiquier(QObject *parent = nullptr);
     ModelEchiquier();
-    pair<int, ModelePiece>& getEchiquier(int range, int colone);
+    pair<int, unique_ptr<ModelePiece>>& getEchiquier(int range, int colone);
+    void placerPiece(pair<uint8_t, uint8_t> cases, unique_ptr<ModelePiece> piece);
     void movePiece(pair<uint8_t, uint8_t> initial , pair<uint8_t, uint8_t> final);
 
 private:
-    pair<int, ModelePiece> echiquier_[8][8];
+    pair<int, unique_ptr<ModelePiece>> echiquier_[8][8];
 signals:
 };
 

@@ -24,6 +24,10 @@ pair<int, unique_ptr<ModelePiece>>& ModelEchiquier::getEchiquier(int range, int 
     return echiquier_[range][colonne];
 }
 
+void ModelEchiquier::placerPiece(pair<uint8_t, uint8_t> cases, unique_ptr<ModelePiece> piece){
+    echiquier_[cases.first][cases.second].second = std::move(piece);
+}
+
 void ModelEchiquier::movePiece(pair<uint8_t, uint8_t> initial , pair<uint8_t, uint8_t> final){
     if (echiquier_[final.first][final.second].second == nullptr){
     echiquier_[final.first][final.second].second = std::move(echiquier_[initial.first][initial.second].second);
