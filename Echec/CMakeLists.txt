@@ -34,7 +34,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         modelTour.h modelTour.cpp
         vueEchiquier.h vueEchiquier.cpp
         modelCase.h modelCase.cpp
-        modelEchiquer.h modelEchiquer.cpp
+        modelEchiquier.h modelEchiquier.cpp
 
 
 
