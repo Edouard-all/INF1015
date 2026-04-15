@@ -4,6 +4,7 @@
 #include <QObject>
 using namespace std;
 namespace modele {
+
 class ModelePiece : public QObject
 {
     Q_OBJECT
@@ -20,6 +21,7 @@ private:
     pair<uint8_t, uint8_t> position_;
     unique_ptr<pair<uint8_t, uint8_t>[]> positionsValides_;
 };
-}
+
 
 #endif // MODELEPIECE_H
+}
